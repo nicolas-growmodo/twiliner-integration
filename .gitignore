@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Environment Variables
+.env
+
+# Local state file
+sync_state.json
+
+# API Responses and Output Logs
+*.txt
+temp_swagger.json
+brevo_error.json
+first_booking_full.json
+
+# Ad-hoc debugging & scratchpad scripts
+# (We are keeping the ones explicitly documented in the README)
+cat_ascii.js
+decode_token.js
+find_*.js
+probe_api.js
+probe_auth.js
+probe_countries.js
+read_test_output.js
+test_payload.js
+test_polling_manual.js
+
+# OS generated files
+.DS_Store
+Thumbs.db

@@ -55,9 +55,17 @@ TURNIT_POS_ID=1 # The PointOfSaleID required by the API for the Requestor Header
 POLLING_INTERVAL_MINUTES=5
 ```
 
-### 3. Running the Poller
+### 3. Running the Poller (Cron Job Mechanism)
 
-To start the main application (which runs the server and initiates the background polling):
+The project includes a built-in polling worker that acts like a cron job. It is triggered continuously while the Node application is running.
+
+**How it works:**
+1.  **Interval:** A `setInterval` loop runs inside `services/poller.js` based on the `POLLING_INTERVAL_MINUTES` defined in the `.env` file (e.g., every 5 minutes).
+2.  **Last Sync State:** When the poller wakes up, it reads a local file called `sync_state.json`. This stores the exact UTC timestamp of when it last successfully synced data.
+3.  **Delta Fetch:** It sends a request to the Turnit API asking *only* for bookings modified or created after that specific timestamp.
+4.  **Process & Update:** It processes the new bookings, sends them to Brevo, and if successful, overwrites `sync_state.json` with the new timestamp so the next run only fetches newer data.
+
+To start the main application (which runs the server and initiates this background polling):
 
 ```bash
 node index.js

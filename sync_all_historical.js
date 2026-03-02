@@ -54,27 +54,27 @@ async function runHistoricalSync() {
 
                     console.log(`[Sync] Transformed Booking ${bookingId} - Email: ${data.customer.email}`);
 
-                    // Push to Brevo
-                    if (data.booking.status === 'confirmed') {
-                        const contactPayload = {
-                            email: data.customer.email,
-                            attributes: {
-                                FIRSTNAME: data.customer.firstName,
-                                LASTNAME: data.customer.lastName,
-                                SMS: data.customer.phone,
-                                BOOKING_REF: data.booking.reference,
-                                DEPARTURE_DATE: data.booking.departureDate,
-                                ARRIVAL_DATE: data.booking.arrivalDate,
-                                PRE_TRAVEL_DATE: data.booking.preTravelDate,
-                                POST_TRAVEL_DATE: data.booking.postTravelDate,
-                                PAYMENT_STATUS: data.booking.status
-                            },
-                            updateEnabled: true
-                        };
-                        await Brevo.syncContactToBrevo(contactPayload);
-                        console.log(`  -> Synced Contact to Brevo.`);
+                    // Push to Brevo - Always sync the contact first so their attributes exist
+                    const contactPayload = {
+                        email: data.customer.email,
+                        attributes: {
+                            FIRSTNAME: data.customer.firstName,
+                            LASTNAME: data.customer.lastName,
+                            SMS: data.customer.phone,
+                            BOOKING_REF: data.booking.reference,
+                            DEPARTURE_DATE: data.booking.departureDate,
+                            ARRIVAL_DATE: data.booking.arrivalDate,
+                            PRE_TRAVEL_DATE: data.booking.preTravelDate,
+                            POST_TRAVEL_DATE: data.booking.postTravelDate,
+                            PAYMENT_STATUS: data.booking.status
+                        },
+                        updateEnabled: true
+                    };
+                    await Brevo.syncContactToBrevo(contactPayload);
+                    console.log(`  -> Synced Contact to Brevo.`);
 
-                    } else if (['pending', 'failed'].includes(data.booking.status)) {
+                    // If it's not confirmed, also send an abandoned cart tracking event
+                    if (['pending', 'failed'].includes(data.booking.status)) {
                         const eventPayload = {
                             event_name: 'cart_updated',
                             identifiers: {

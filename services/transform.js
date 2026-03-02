@@ -27,6 +27,15 @@ function transformTurnitReservation(reservation) {
     // We don't abort if no legs exist anymore, we just leave route data empty
     // so the contact can still be created in Brevo.
 
+    const customerEmail = purchaser.email;
+    const customerFirstName = purchaser.firstName;
+    const customerLastName = purchaser.lastName;
+    const customerPhone = purchaser.phone || ''; // Phone might be missing in purchaser detail
+    const bookingReference = reservation.id || reservation.bookingCode;
+
+    // Determine status roughly based on confirmed price or offers
+    const paymentStatus = reservation.confirmedPrice && reservation.confirmedPrice.amount > 0 ? 'confirmed' : 'pending';
+
     let departureDateStr = '';
     let arrivalDateStr = '';
     let origin = 'Unknown';

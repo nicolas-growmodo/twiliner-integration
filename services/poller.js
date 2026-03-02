@@ -59,28 +59,26 @@ async function runSync() {
 
                 console.log(`[Worker] Transformed Booking ${bookingId} - Email: ${data.customer.email}`);
 
-                // 5. Sync to Brevo
-                if (data.booking.status === 'confirmed') {
-                    // map transform output to Brevo Contact structure
-                    const contactPayload = {
-                        email: data.customer.email,
-                        attributes: {
-                            FIRSTNAME: data.customer.firstName,
-                            LASTNAME: data.customer.lastName,
-                            SMS: data.customer.phone,
-                            BOOKING_REF: data.booking.reference,
-                            DEPARTURE_DATE: data.booking.departureDate,
-                            ARRIVAL_DATE: data.booking.arrivalDate,
-                            PRE_TRAVEL_DATE: data.booking.preTravelDate,
-                            POST_TRAVEL_DATE: data.booking.postTravelDate,
-                            PAYMENT_STATUS: data.booking.status
-                        },
-                        updateEnabled: true
-                    };
-                    await Brevo.syncContactToBrevo(contactPayload);
+                // 5. Sync to Brevo - Always sync the contact first so their data is available
+                const contactPayload = {
+                    email: data.customer.email,
+                    attributes: {
+                        FIRSTNAME: data.customer.firstName,
+                        LASTNAME: data.customer.lastName,
+                        ...(data.customer.phone ? { SMS: data.customer.phone } : {}),
+                        BOOKING_REF: data.booking.reference,
+                        DEPARTURE_DATE: data.booking.departureDate,
+                        ARRIVAL_DATE: data.booking.arrivalDate,
+                        PRE_TRAVEL_DATE: data.booking.preTravelDate,
+                        POST_TRAVEL_DATE: data.booking.postTravelDate,
+                        PAYMENT_STATUS: data.booking.status
+                    },
+                    updateEnabled: true
+                };
+                await Brevo.syncContactToBrevo(contactPayload);
 
-                } else if (['pending', 'failed'].includes(data.booking.status)) {
-                    // map transform output to Brevo Event structure
+                // If it's an unconfirmed/failed booking, push a cart abandonment track event
+                if (['pending', 'failed'].includes(data.booking.status)) {
                     const eventPayload = {
                         event_name: 'cart_updated',
                         identifiers: {

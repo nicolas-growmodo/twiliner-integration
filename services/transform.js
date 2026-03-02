@@ -24,10 +24,8 @@ function transformTurnitReservation(reservation) {
         legs = trips[0].legs || [];
     }
 
-    if (legs.length === 0) {
-        console.warn('Transformation failed: No trips or legs found in reservation');
-        return null;
-    }
+    // We don't abort if no legs exist anymore, we just leave route data empty
+    // so the contact can still be created in Brevo.
 
     const customerEmail = purchaser.email;
     const customerFirstName = purchaser.firstName;
@@ -38,27 +36,29 @@ function transformTurnitReservation(reservation) {
     // Determine status roughly based on confirmed price or offers
     const paymentStatus = reservation.confirmedPrice && reservation.confirmedPrice.amount > 0 ? 'confirmed' : 'pending';
 
-    const firstLeg = legs[0];
-    const lastLeg = legs[legs.length - 1];
-
-    // Handle extraction depending on whether we got tripSummaries or full trips.legs
     let departureDateStr = '';
     let arrivalDateStr = '';
     let origin = 'Unknown';
     let destination = 'Unknown';
 
-    if (firstLeg.startTime) {
-        // Fallback for older mock format
-        departureDateStr = firstLeg.startTime;
-        arrivalDateStr = lastLeg.endTime;
-        origin = firstLeg.origin && firstLeg.origin.stopPlaceRef ? firstLeg.origin.stopPlaceRef : 'Unknown';
-        destination = lastLeg.destination && lastLeg.destination.stopPlaceRef ? lastLeg.destination.stopPlaceRef : 'Unknown';
-    } else if (firstLeg.timedLeg) {
-        // Real API format
-        departureDateStr = firstLeg.timedLeg.start.serviceDeparture.timetabledTime;
-        arrivalDateStr = lastLeg.timedLeg.end.serviceArrival.timetabledTime;
-        origin = firstLeg.timedLeg.start.stopPlaceName || firstLeg.timedLeg.start.stopPlaceRef.stopPlaceRef;
-        destination = lastLeg.timedLeg.end.stopPlaceName || lastLeg.timedLeg.end.stopPlaceRef.stopPlaceRef;
+    if (legs.length > 0) {
+        const firstLeg = legs[0];
+        const lastLeg = legs[legs.length - 1];
+
+        // Handle extraction depending on whether we got tripSummaries or full trips.legs
+        if (firstLeg.startTime) {
+            // Fallback for older mock format
+            departureDateStr = firstLeg.startTime;
+            arrivalDateStr = lastLeg.endTime;
+            origin = firstLeg.origin && firstLeg.origin.stopPlaceRef ? firstLeg.origin.stopPlaceRef : 'Unknown';
+            destination = lastLeg.destination && lastLeg.destination.stopPlaceRef ? lastLeg.destination.stopPlaceRef : 'Unknown';
+        } else if (firstLeg.timedLeg) {
+            // Real API format
+            departureDateStr = firstLeg.timedLeg.start.serviceDeparture.timetabledTime;
+            arrivalDateStr = lastLeg.timedLeg.end.serviceArrival.timetabledTime;
+            origin = firstLeg.timedLeg.start.stopPlaceName || firstLeg.timedLeg.start.stopPlaceRef.stopPlaceRef;
+            destination = lastLeg.timedLeg.end.stopPlaceName || lastLeg.timedLeg.end.stopPlaceRef.stopPlaceRef;
+        }
     }
 
     // 3. Transform/Calculate Dates

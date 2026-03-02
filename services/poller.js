@@ -50,6 +50,9 @@ async function runSync() {
                 // Assuming API returns { reservation: { ... } } or similar. 
                 // If API returns flat booking object, wrap it:
                 const bookingWrapper = fullBooking.reservation ? fullBooking : { reservation: fullBooking };
+                
+                // Add debug log to see incoming shape
+                console.log(`[Worker] Incoming data shape for ${bookingId}:`, JSON.stringify(bookingWrapper, null, 2));
 
                 const data = Transform.transformTurnitReservation(bookingWrapper.reservation || bookingWrapper);
 

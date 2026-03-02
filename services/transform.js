@@ -14,10 +14,18 @@ function transformTurnitReservation(reservation) {
     // 2. Extract Data from Real API Structure
     // API returns 'purchaser' and 'tripSummaries', not 'customer' and 'legs'
     const purchaser = reservation.purchaser && reservation.purchaser.detail ? reservation.purchaser.detail : {};
-    const tripSummaries = reservation.tripSummaries || [];
+    const trips = reservation.trips || [];
+    let legs = [];
 
-    if (tripSummaries.length === 0) {
-        console.warn('Transformation failed: No trip summaries (legs) in reservation');
+    // Flat map all legs from all trips if tripSummaries is missing
+    if (reservation.tripSummaries) {
+        legs = reservation.tripSummaries;
+    } else if (trips.length > 0) {
+        legs = trips[0].legs || [];
+    }
+
+    if (legs.length === 0) {
+        console.warn('Transformation failed: No trips or legs found in reservation');
         return null;
     }
 
@@ -25,17 +33,33 @@ function transformTurnitReservation(reservation) {
     const customerFirstName = purchaser.firstName;
     const customerLastName = purchaser.lastName;
     const customerPhone = purchaser.phone || ''; // Phone might be missing in purchaser detail
-    const bookingReference = reservation.id; // Using UUID as reference
+    const bookingReference = reservation.id || reservation.bookingCode;
 
     // Determine status roughly based on confirmed price or offers
-    // Real logic might need to inspect bookedOfferSummaries statuses
     const paymentStatus = reservation.confirmedPrice && reservation.confirmedPrice.amount > 0 ? 'confirmed' : 'pending';
 
-    const firstLeg = tripSummaries[0];
-    const lastLeg = tripSummaries[tripSummaries.length - 1];
+    const firstLeg = legs[0];
+    const lastLeg = legs[legs.length - 1];
 
-    const departureDateStr = firstLeg.startTime;
-    const arrivalDateStr = lastLeg.endTime;
+    // Handle extraction depending on whether we got tripSummaries or full trips.legs
+    let departureDateStr = '';
+    let arrivalDateStr = '';
+    let origin = 'Unknown';
+    let destination = 'Unknown';
+
+    if (firstLeg.startTime) {
+        // Fallback for older mock format
+        departureDateStr = firstLeg.startTime;
+        arrivalDateStr = lastLeg.endTime;
+        origin = firstLeg.origin && firstLeg.origin.stopPlaceRef ? firstLeg.origin.stopPlaceRef : 'Unknown';
+        destination = lastLeg.destination && lastLeg.destination.stopPlaceRef ? lastLeg.destination.stopPlaceRef : 'Unknown';
+    } else if (firstLeg.timedLeg) {
+        // Real API format
+        departureDateStr = firstLeg.timedLeg.start.serviceDeparture.timetabledTime;
+        arrivalDateStr = lastLeg.timedLeg.end.serviceArrival.timetabledTime;
+        origin = firstLeg.timedLeg.start.stopPlaceName || firstLeg.timedLeg.start.stopPlaceRef.stopPlaceRef;
+        destination = lastLeg.timedLeg.end.stopPlaceName || lastLeg.timedLeg.end.stopPlaceRef.stopPlaceRef;
+    }
 
     // 3. Transform/Calculate Dates
     const departureDate = new Date(departureDateStr);
@@ -51,6 +75,7 @@ function transformTurnitReservation(reservation) {
 
     // Helper to format date as YYYY-MM-DD
     const formatDate = (date) => {
+        if (isNaN(date.getTime())) return ''; // Avoid invalid date bugs
         return date.toISOString().split('T')[0];
     };
 
@@ -58,14 +83,6 @@ function transformTurnitReservation(reservation) {
     const formattedPostTravelDate = formatDate(postTravelDate);
     const formattedDepartureDate = formatDate(departureDate);
     const formattedArrivalDate = formatDate(arrivalDate);
-
-    // Get origin/dest from StopPlaceRef or similar
-    const getPlaceName = (placeObj) => {
-        return placeObj && placeObj.stopPlaceRef ? placeObj.stopPlaceRef : 'Unknown';
-    };
-
-    const origin = getPlaceName(firstLeg.origin);
-    const destination = getPlaceName(lastLeg.destination);
 
     // Price
     const totalPrice = reservation.confirmedPrice ? reservation.confirmedPrice.amount / Math.pow(10, reservation.confirmedPrice.scale) : 0;

@@ -36,7 +36,6 @@ async function runSync() {
                     continue;
                 }
 
-                console.log(`[Worker] Processing Booking ID: ${bookingId}`);
                 const fullBooking = await Turnit.getBookingDetails(bookingId);
 
                 if (!fullBooking) {

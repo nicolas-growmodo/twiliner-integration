@@ -6,7 +6,7 @@ const Brevo = require('./services/brevo');
 (async () => {
     console.log('--- TESTING FULL INTEGRATION FLOW ---');
 
-    const BOOKING_ID = '4d4d14e8-3b21-4672-9241-4207b76648cb'; // Known valid ID
+    const BOOKING_ID = '6923d70a-c6d1-40ae-b9df-ff8d97a1632e'; // Known failing ID from logs
 
     try {
         // 1. Fetch from Turnit
@@ -18,6 +18,11 @@ const Brevo = require('./services/brevo');
             return;
         }
         console.log('✅ Fetched Booking.');
+
+        // Write raw response to file for debugging
+        const fs = require('fs');
+        fs.writeFileSync('real_api_response.json', JSON.stringify(fullBooking, null, 2));
+        console.log('✅ Wrote raw API response to real_api_response.json');
 
         // Log requested by user
         // Access via .booking wrapper if present

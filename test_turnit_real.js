@@ -22,6 +22,9 @@ const Turnit = require('./services/turnit');
 
         console.log(`Found ${bookings.length} bookings.`);
 
+        console.log('Bookings Data:', JSON.stringify(bookings, null, 2));
+
+
         if (bookings.length > 0) {
             console.log(`\nProcessing ${bookings.length} bookings...`);
 

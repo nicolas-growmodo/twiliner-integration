@@ -11,7 +11,7 @@ async function runHistoricalSync() {
     console.log('Ensure you are running against the intended environment based on your .env file.');
 
     // Set a start date far in the past
-    let searchStartTimestamp = '2020-01-01T00:00:00.000Z';
+    let searchStartTimestamp = '2025-01-01T00:00:00.000Z';
     let totalProcessed = 0;
     let keepSearching = true;
 
@@ -60,7 +60,7 @@ async function runHistoricalSync() {
                         attributes: {
                             FIRSTNAME: data.customer.firstName,
                             LASTNAME: data.customer.lastName,
-                            SMS: data.customer.phone,
+                            ...(data.customer.phone ? { SMS: data.customer.phone } : {}),
                             BOOKING_REF: data.booking.reference,
                             DEPARTURE_DATE: data.booking.departureDate,
                             ARRIVAL_DATE: data.booking.arrivalDate,

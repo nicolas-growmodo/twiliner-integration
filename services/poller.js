@@ -66,7 +66,7 @@ async function runSync() {
                     attributes: {
                         FIRSTNAME: data.customer.firstName,
                         LASTNAME: data.customer.lastName,
-                        SMS: data.customer.phone,
+                        ...(data.customer.phone ? { SMS: data.customer.phone } : {}),
                         BOOKING_REF: data.booking.reference,
                         DEPARTURE_DATE: data.booking.departureDate,
                         ARRIVAL_DATE: data.booking.arrivalDate,

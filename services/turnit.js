@@ -129,6 +129,7 @@ async function getBookingDetails(bookingId) {
         const response = await axios.get(`${TURNIT_API_URL}/bookings/${bookingId}`, {
             headers: getHeaders(token)
         });
+        console.log('Response Data:', JSON.stringify(response.data, null, 2));
 
         return response.data;
     } catch (error) {

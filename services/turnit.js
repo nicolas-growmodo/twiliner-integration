@@ -140,7 +140,36 @@ async function getBookingDetails(bookingId) {
     }
 }
 
+/**
+ * Retrieves purchaser details for a specific booking.
+ * Uses GET /bookings/{bookingId}/purchaser
+ * 
+ * @param {string} bookingId 
+ * @returns {Object} - Purchaser object.
+ */
+async function getPurchaserDetails(bookingId) {
+    if (!TURNIT_API_URL) return null;
+
+    try {
+        const token = await getAuthToken();
+        console.log(`Fetching purchaser details for booking ID: ${bookingId}...`);
+
+        const response = await axios.get(`${TURNIT_API_URL}/bookings/${bookingId}/purchaser`, {
+            headers: getHeaders(token)
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error(`[Turnit Error] Get Purchaser Details failed for ${bookingId}:`, error.message);
+        if (error.response) {
+            console.error('Response Data:', JSON.stringify(error.response.data, null, 2));
+        }
+        return null;
+    }
+}
+
 module.exports = {
     searchBookings,
-    getBookingDetails
+    getBookingDetails,
+    getPurchaserDetails
 };

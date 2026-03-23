@@ -2,7 +2,7 @@ require('dotenv').config();
 const Turnit = require('./services/turnit');
 
 (async () => {
-    console.log('--- TESTING REAL TURNIT API ---');
+    console.log('--- TESTING TURNIT API: FETCH PURCHASER ---');
 
     // Check Config
     if (!process.env.TURNIT_API_URL || !process.env.TURNIT_AUTH_ID) {
@@ -12,7 +12,7 @@ const Turnit = require('./services/turnit');
     }
 
     try {
-        // 1. Search for bookings created in the last 30 days
+        // 1. Search for bookings created in the last 5 days
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - 5);
         const since = startDate.toISOString();
@@ -22,31 +22,29 @@ const Turnit = require('./services/turnit');
 
         console.log(`Found ${bookings.length} bookings.`);
 
-        console.log('Bookings Data:', JSON.stringify(bookings, null, 2));
-
-
         if (bookings.length > 0) {
             console.log(`\nProcessing ${bookings.length} bookings...`);
 
             for (const summary of bookings) {
                 const bookingId = summary.id || summary.bookingId;
-                // console.log(`Fetching details for booking ID: ${bookingId}...`); // Optional: reduce noise
 
                 try {
-                    const details = await Turnit.getBookingDetails(bookingId);
+                    // 2. Fetch only the Purchaser Details for this booking
+                    const purchaserData = await Turnit.getPurchaserDetails(bookingId);
 
-                    if (details && details.booking && details.booking.purchaser && details.booking.purchaser.detail) {
-                        const p = details.booking.purchaser.detail;
-                        console.log(`Totally customer data found: ${p.firstName} ${p.lastName} (ID: ${bookingId})`);
+                    if (purchaserData && purchaserData.purchaser && purchaserData.purchaser.detail) {
+                        const p = purchaserData.purchaser.detail;
+                        console.log(`✅ Purchaser found for ${bookingId}: ${p.firstName} ${p.lastName} (${p.email})`);
                     } else {
-                        console.log(`Totally customer data found (ID: ${bookingId}) - Name missing`);
+                        console.log(`⚠️ Purchaser abstract or missing detail for ${bookingId}`);
+                        console.log(JSON.stringify(purchaserData, null, 2));
                     }
 
-                    // Add a small delay to avoid hitting rate limits if many bookings
+                    // Add a small delay to avoid hitting rate limits
                     await new Promise(resolve => setTimeout(resolve, 500));
 
                 } catch (err) {
-                    console.error(`Failed to fetch ${bookingId}: ${err.message}`);
+                    console.error(`Failed to fetch purchaser for ${bookingId}: ${err.message}`);
                 }
             }
         } else {

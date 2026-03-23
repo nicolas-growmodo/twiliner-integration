@@ -6,7 +6,7 @@ const Brevo = require('./services/brevo');
 (async () => {
     console.log('--- TESTING FULL INTEGRATION FLOW ---');
 
-    const BOOKING_ID = '4d4d14e8-3b21-4672-9241-4207b76648cb'; // Known valid ID
+    const BOOKING_ID = '8db43b17-ce8b-4cd5-886d-4cca32d34e7b'; // Known valid ID
 
     try {
         // 1. Fetch from Turnit

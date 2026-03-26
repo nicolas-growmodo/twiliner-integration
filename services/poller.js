@@ -45,16 +45,12 @@ async function runSync() {
                 }
 
                 // 4. Transform
-                // Note: transform logic expects 'reservation' key if following webhook structure, 
-                // but API might return it directly. Adjusting wrapper here to match transform expectation.
-                // Assuming API returns { reservation: { ... } } or similar. 
-                // If API returns flat booking object, wrap it:
-                const bookingWrapper = fullBooking.reservation ? fullBooking : { reservation: fullBooking };
+                // Handle different wrappers from Turnit API (booking, reservation, or flat)
+                const bookingData = fullBooking.booking || fullBooking.reservation || fullBooking;
+                const data = Transform.transformTurnitReservation(bookingData);
 
-                const data = Transform.transformTurnitReservation(bookingWrapper.reservation || bookingWrapper);
-
-                if (!data) {
-                    console.warn(`[Worker] Transformation failed for booking ${summary.id}.`);
+                if (!data || !data.customer || !data.customer.email) {
+                    console.warn(`[Worker] Skipping booking ${bookingId}: Missing customer email or transformation failed.`);
                     continue;
                 }
 

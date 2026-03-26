@@ -32,6 +32,27 @@ async function syncContactToBrevo(payload) {
 }
 
 /**
+ * Updates an explicit existing contact in Brevo using PUT /contacts/{identifier}
+ * @param {string} email - The contact email
+ * @param {Object} payload - The update payload (e.g. attributes)
+ */
+async function updateContactInBrevo(email, payload) {
+    try {
+        const response = await axios.put(`${BREVO_API_URL}/contacts/${encodeURIComponent(email)}?identifierType=email_id`, payload, { headers: getHeaders() });
+        console.log(`[Brevo] Contact updated successfully. Email: ${email}`);
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            console.error(`[Brevo Error] Update Contact Failed. Status: ${error.response.status}`, error.response.data);
+            throw new Error(`Brevo Update Failed: ${error.response.status}`);
+        } else {
+            console.error(`[Brevo Error] ${error.message}`);
+            throw error;
+        }
+    }
+}
+
+/**
  * Tracks an event in Brevo.
  * @param {Object} payload - The event payload (event_name, identifiers, event_properties).
  */
@@ -54,5 +75,6 @@ async function trackEventInBrevo(payload) {
 
 module.exports = {
     syncContactToBrevo,
+    updateContactInBrevo,
     trackEventInBrevo
 };

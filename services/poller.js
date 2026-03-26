@@ -56,12 +56,12 @@ async function runSync() {
 
                 console.log(`[Worker] Transformed Booking ${bookingId} - Email: ${data.customer.email}`);
 
-                // 5. Sync to Brevo - Always sync the contact first so their data is available
+                // 5. Sync to Brevo
                 const contactPayload = {
                     email: data.customer.email,
                     attributes: {
-                        FIRSTNAME: data.customer.firstName,
-                        LASTNAME: data.customer.lastName,
+                        FNAME: data.customer.firstName,
+                        LNAME: data.customer.lastName,
                         ...(data.customer.phone ? { SMS: data.customer.phone } : {}),
                         BOOKING_REF: data.booking.reference,
                         DEPARTURE_DATE: data.booking.departureDate,
@@ -72,7 +72,15 @@ async function runSync() {
                     },
                     updateEnabled: true
                 };
-                await Brevo.syncContactToBrevo(contactPayload);
+
+                try {
+                    // Try to explicitly update via PUT first, ensuring all attributes rewrite correctly
+                    await Brevo.updateContactInBrevo(data.customer.email, { attributes: contactPayload.attributes });
+                } catch (updateErr) {
+                    // If contact doesn't exist (404), create it via POST
+                    console.log(`[Worker] Contact not found for update, creating new contact...`);
+                    await Brevo.syncContactToBrevo(contactPayload);
+                }
 
                 // If it's an unconfirmed/failed booking, push a cart abandonment track event
                 if (['pending', 'failed'].includes(data.booking.status)) {
@@ -82,6 +90,8 @@ async function runSync() {
                             email_id: data.customer.email
                         },
                         event_properties: {
+                            firstname: data.customer.firstName,
+                            lastname: data.customer.lastName,
                             id: data.booking.reference,
                             price: data.booking.totalPrice,
                             currency: data.booking.currency,

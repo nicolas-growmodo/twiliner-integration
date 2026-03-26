@@ -1,75 +1,55 @@
 require('dotenv').config();
-const axios = require('axios');
+const Turnit = require('./services/turnit');
+const Transform = require('./services/transform');
 const fs = require('fs');
 
-const BOOKING_ID = '4d4d14e8-3b21-4672-9241-4207b76648cb';
-const BASE_URL = 'https://api.prelive.twiliner.turnit.tech/retailer';
-
-async function getAuthToken() {
-    try {
-        const response = await axios.post('https://identity.prelive.twiliner.turnit.tech/connect/token', {
-            grant_type: 'client_credentials',
-            client_id: process.env.TURNIT_AUTH_ID,
-            client_secret: process.env.TURNIT_AUTH_SECRET
-        }, {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-        return response.data.access_token;
-    } catch (e) {
-        console.error('Auth Failed:', e.message);
-        process.exit(1);
-    }
-}
+const BOOKING_ID = '95adefc8-6616-4d17-a915-2869e66f04c6';
 
 (async () => {
-    fs.writeFileSync('probe_get_results.txt', '');
-    const log = (msg) => {
-        console.log(msg);
-        fs.appendFileSync('probe_get_results.txt', msg + '\n');
-    };
+    console.log(`--- PROBING BOOKING: ${BOOKING_ID} ---`);
+    console.log(`Using API: ${process.env.TURNIT_API_URL}`);
 
-    log('--- PROBING DETAILED ERROR (JSON HEADER) ---');
-    const token = await getAuthToken();
+    try {
+        // 1. Fetch using standard service logic
+        console.log('\n[Step 1] Fetching raw details from Turnit...');
+        const rawResponse = await Turnit.getBookingDetails(BOOKING_ID);
 
-    // 2. Check Booking with Key Variations
-    const url = `${BASE_URL}/bookings/${BOOKING_ID}`;
-    log(`Checking: ${url}`);
-
-    const variations = [
-        { label: 'pointOfSaleId: 1', val: { pointOfSaleId: 1 } },
-        { label: 'pointOfSaleId: "1"', val: { pointOfSaleId: "1" } },
-        { label: 'salesPointId: 1', val: { salesPointId: 1 } }, // Retry
-        { label: 'posId: 1', val: { posId: 1 } },
-        { label: 'Combined', val: { organizationId: "1", pointOfSaleId: "1" } },
-        { label: 'Combined 2', val: { organizationId: 1, salesPointId: 1 } },
-        // Try to match the auth response structure if any?
-        { label: 'Lower case', val: { pointofsaleid: 1 } }
-    ];
-
-    for (const v of variations) {
-        log(`\nTesting: ${v.label}`);
-        const b64 = Buffer.from(JSON.stringify(v.val)).toString('base64');
-
-        try {
-            await axios.get(url, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Accept': 'application/json',
-                    'Requestor': b64
-                }
-            });
-            log(`✅ SUCCESS! Found with ${v.label}.`);
-            fs.writeFileSync('valid_req_json.txt', JSON.stringify(v.val));
+        if (!rawResponse) {
+            console.error('FAILED: No response from API.');
             return;
-        } catch (error) {
-            if (error.response) {
-                log(`  [${error.response.status}] ${error.response.statusText}`);
-                if (error.response.status === 400 || error.response.status === 403 || error.response.status === 404) {
-                    log(`  Body: ${JSON.stringify(error.response.data)}`);
-                }
-            } else {
-                log(`  [ERROR] ${error.message}`);
-            }
+        }
+
+        // Save raw response for inspection
+        fs.writeFileSync('probe_raw_response.json', JSON.stringify(rawResponse, null, 2));
+        console.log('✅ RAW response saved to probe_raw_response.json');
+
+        // 2. Pass through Actual Transformation Logic
+        console.log('\n[Step 2] Passing through transformation logic...');
+
+        // Handle the wrapper if present
+        const bookingData = rawResponse.booking || rawResponse.reservation || rawResponse;
+        const data = Transform.transformTurnitReservation(bookingData);
+
+        if (!data) {
+            console.error('❌ FAILED: Transformation returned null.');
+            return;
+        }
+
+        console.log('✅ TRANSFORMATION SUCCESSFUL');
+        console.log('\n--- Transformed Data ---');
+        console.log(JSON.stringify(data, null, 2));
+
+        // Final check on email (the critical field)
+        if (data.customer && data.customer.email) {
+            console.log('\nSUCCESS: Email found and correctly parsed:', data.customer.email);
+        } else {
+            console.warn('\nWARNING: Transformation succeeded but EMAIL is missing/undefined.');
+        }
+
+    } catch (error) {
+        console.error('\nPROBE ERROR:', error.message);
+        if (error.response) {
+            console.error('API Error Response:', JSON.stringify(error.response.data, null, 2));
         }
     }
 })();

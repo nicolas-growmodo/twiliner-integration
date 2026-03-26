@@ -1,0 +1,461 @@
+{
+  "booking": {
+    "id": "95adefc8-6616-4d17-a915-2869e66f04c6",
+    "bookingCode": "T1WDBA",
+    "externalRef": "202eff1f-9844-4b43-a727-2134153cd852",
+    "summary": "Booking T1WDBA",
+    "createdOn": "2026-03-22T12:12:56.139468Z",
+    "passengers": [
+      {
+        "id": "8d246d85-9892-4a0a-839c-b41500c94ec7",
+        "externalRef": "f4966860-ff8f-4966-bead-c8eb3ac7160e",
+        "type": "PERSON",
+        "cards": [],
+        "detail": {
+          "firstName": "Marco",
+          "lastName": "Schuler",
+          "email": "schuler.zurfluh@bluewin.ch",
+          "phoneNumber": "+41794797674"
+        },
+        "prmNeeds": [],
+        "sharePlaceWithGuardian": false
+      }
+    ],
+    "purchaser": {
+      "detail": {
+        "preferredLanguage": "CULTURE.EN_GB",
+        "firstName": "Martina",
+        "lastName": "Schuler",
+        "email": "schuler.zurfluh@bluewin.ch",
+        "phoneNumber": "+41794797674"
+      }
+    },
+    "provisionalPrice": {
+      "vats": [],
+      "currency": "CHF",
+      "amount": 0,
+      "scale": 2
+    },
+    "confirmedPrice": {
+      "vats": [],
+      "currency": "CHF",
+      "amount": 0,
+      "scale": 2
+    },
+    "isFinalPaymentRequired": false,
+    "isPlaceChangeInProgress": false,
+    "bookedOffers": [
+      {
+        "offerId": "2d2846c9-1a9c-4dc3-9307-e7c8b8334c01",
+        "admissions": [
+          {
+            "isReservationRequired": true,
+            "feeRefs": [],
+            "reservationRefs": [
+              {
+                "id": "04ba797c-0382-421e-9663-0573fcb59467"
+              }
+            ],
+            "ancillaryRefs": [],
+            "regulatoryConditions": [
+              "CIV"
+            ],
+            "objectType": "Admission",
+            "id": "32c54b68-6e76-40d9-8716-c7e849017afe",
+            "summary": "Seat | Standard, 4/3/2026 9:30:00 PM +02:00 - 4/4/2026 6:15:00 AM +02:00, 001 - 009, Marco Schuler",
+            "createdOn": "2026-03-22T12:12:56.139468Z",
+            "confirmableUntil": "2026-03-22T12:27:56.137044Z",
+            "validFrom": "2026-04-03T19:30:00+00:00",
+            "validUntil": "2026-04-04T04:15:00+00:00",
+            "confirmedOn": "2026-03-22T12:13:40.763722Z",
+            "price": {
+              "vats": [],
+              "currency": "CHF",
+              "amount": 0,
+              "scale": 2
+            },
+            "originalPrice": {
+              "currency": "CHF",
+              "amount": 19200,
+              "scale": 2
+            },
+            "tripCoverage": {
+              "coveredTripId": "f2e0a57e-ea43-48e8-a914-a8b67229a419",
+              "coveredLegIds": [
+                "daca9ec5-0fab-4a40-b13f-27f548cfca6a"
+              ]
+            },
+            "products": [
+              {
+                "productId": "e3a1463f-4688-40fe-a67f-9841d990d993",
+                "legIds": [
+                  "daca9ec5-0fab-4a40-b13f-27f548cfca6a"
+                ]
+              }
+            ],
+            "status": "FULFILLED",
+            "hasBeenInSoldStatus": true,
+            "offerMode": "INDIVIDUAL",
+            "passengerIds": [
+              "8d246d85-9892-4a0a-839c-b41500c94ec7"
+            ],
+            "refundable": "NO",
+            "exchangeable": "NO",
+            "appliedCorporateCodes": [],
+            "appliedPassengerTypes": [
+              {
+                "passengerRef": "8d246d85-9892-4a0a-839c-b41500c94ec7",
+                "type": "ADULT",
+                "description": "Passenger",
+                "tripCoverage": {
+                  "coveredTripId": "f2e0a57e-ea43-48e8-a914-a8b67229a419"
+                },
+                "appliedReductionCardTypes": []
+              }
+            ],
+            "appliedPromotionCodes": [
+              {
+                "code": "3acc820a03",
+                "name": "Early Bird Migrated",
+                "description": "100% Discount"
+              }
+            ],
+            "appliedReductions": []
+          }
+        ],
+        "reservations": [
+          {
+            "placeAllocation": {
+              "accommodationType": "SEAT",
+              "accommodationSubType": "ANY_SEAT",
+              "reservedPlaces": [
+                {
+                  "id": "3356F",
+                  "passengerIds": [
+                    "8d246d85-9892-4a0a-839c-b41500c94ec7"
+                  ],
+                  "vehicleNumber": "Twiliner-Bus-1",
+                  "coachNumber": "Twiliner-Bus-1",
+                  "placeNumbers": [
+                    "21"
+                  ],
+                  "placeProperties": []
+                }
+              ],
+              "tripLegCoverage": {
+                "tripId": "f2e0a57e-ea43-48e8-a914-a8b67229a419",
+                "legId": "daca9ec5-0fab-4a40-b13f-27f548cfca6a"
+              }
+            },
+            "feeRefs": [],
+            "availablePlacePreferences": [
+              {
+                "graphicalReservation": "WITHOUT_FEE"
+              }
+            ],
+            "objectType": "Reservation",
+            "id": "04ba797c-0382-421e-9663-0573fcb59467",
+            "createdOn": "2026-03-22T12:12:56.139468Z",
+            "confirmableUntil": "2026-03-22T12:27:56.137044Z",
+            "validFrom": "2026-04-03T19:30:00+00:00",
+            "validUntil": "2026-04-04T04:15:00+00:00",
+            "confirmedOn": "2026-03-22T12:13:40.767537Z",
+            "price": {
+              "vats": [],
+              "currency": "CHF",
+              "amount": 0,
+              "scale": 2
+            },
+            "originalPrice": {
+              "currency": "CHF",
+              "amount": 0,
+              "scale": 2
+            },
+            "tripCoverage": {
+              "coveredTripId": "f2e0a57e-ea43-48e8-a914-a8b67229a419",
+              "coveredLegIds": [
+                "daca9ec5-0fab-4a40-b13f-27f548cfca6a"
+              ]
+            },
+            "products": [
+              {
+                "productId": "b6a4e463-15a0-4633-b560-5618c2327b12",
+                "legIds": [
+                  "daca9ec5-0fab-4a40-b13f-27f548cfca6a"
+                ]
+              }
+            ],
+            "status": "FULFILLED",
+            "hasBeenInSoldStatus": true,
+            "offerMode": "INDIVIDUAL",
+            "passengerIds": [
+              "8d246d85-9892-4a0a-839c-b41500c94ec7"
+            ],
+            "refundable": "NO",
+            "exchangeable": "NO",
+            "appliedPromotionCodes": [],
+            "appliedReductions": []
+          }
+        ],
+        "ancillaries": [],
+        "fees": [],
+        "tripCoverage": {
+          "coveredTripId": "f2e0a57e-ea43-48e8-a914-a8b67229a419",
+          "coveredLegIds": [
+            "daca9ec5-0fab-4a40-b13f-27f548cfca6a"
+          ]
+        },
+        "appliedThroughTicketTags": [],
+        "products": [
+          {
+            "id": "e3a1463f-4688-40fe-a67f-9841d990d993",
+            "summary": "Seat | Standard",
+            "type": "ADMISSION_POINT2POINT",
+            "code": "S001",
+            "description": "Seat | Standard",
+            "owner": "CH-020.3.049.775-0",
+            "conditions": [
+              {
+                "type": "SALE",
+                "description": "Seat Standard - Weekends (Fri-Sun)",
+                "shortDescription": "Seat Standard - Weekends"
+              }
+            ],
+            "flexibility": "NON_FLEXIBLE",
+            "serviceClass": {
+              "type": "STANDARD",
+              "name": "Standard"
+            },
+            "travelClass": "SECOND",
+            "isTrainBound": true,
+            "isReturnProduct": false,
+            "fulfillmentOptions": [
+              {
+                "type": "ETICKET",
+                "media": "PDF_A4"
+              }
+            ],
+            "descriptiveTexts": [
+              {
+                "description": "Standard tickets cannot be refunded. Incl. 1 x Hand luggage (max. 7kg), 1 x Checked luggage(max. 23kg).",
+                "shortDescription": "Ticket change info",
+                "textElementType": "INFORMATION"
+              }
+            ],
+            "freeItemCount": 0,
+            "productTags": []
+          },
+          {
+            "id": "b6a4e463-15a0-4633-b560-5618c2327b12",
+            "summary": "Seat Reservation",
+            "type": "RESERVATION",
+            "code": "R001",
+            "description": "Seat Reservation",
+            "owner": "CH-020.3.049.775-0",
+            "conditions": [
+              {
+                "type": "SALE",
+                "description": "Seat Standard - Weekends (Fri-Sun)",
+                "shortDescription": "Seat Standard - Weekends"
+              }
+            ],
+            "flexibility": "NON_FLEXIBLE",
+            "serviceClass": {
+              "type": "STANDARD",
+              "name": "Standard"
+            },
+            "travelClass": "SECOND",
+            "isTrainBound": true,
+            "isReturnProduct": false,
+            "fulfillmentOptions": [
+              {
+                "type": "ETICKET",
+                "media": "PDF_A4"
+              }
+            ],
+            "descriptiveTexts": [],
+            "freeItemCount": 0,
+            "productTags": []
+          }
+        ]
+      }
+    ],
+    "trips": [
+      {
+        "id": "f2e0a57e-ea43-48e8-a914-a8b67229a419",
+        "externalRef": "a58f2e08-7cf7-4b99-b26c-e94479f899e5",
+        "duration": "PT8H45M",
+        "direction": "OUT_BOUND",
+        "origin": {
+          "stopPlaceRef": "001",
+          "objectType": "StopPlaceRef"
+        },
+        "destination": {
+          "stopPlaceRef": "009",
+          "objectType": "StopPlaceRef"
+        },
+        "startTime": "2026-04-03T21:30:00+02:00",
+        "endTime": "2026-04-04T06:15:00+02:00",
+        "transfers": 0,
+        "legs": [
+          {
+            "id": "daca9ec5-0fab-4a40-b13f-27f548cfca6a",
+            "externalRef": "54805091-82f5-4e7a-a8b3-7b464af05f18",
+            "timedLeg": {
+              "start": {
+                "stopPlaceRef": {
+                  "stopPlaceRef": "001",
+                  "objectType": "StopPlaceRef"
+                },
+                "stopPlaceName": "Zurich",
+                "serviceDeparture": {
+                  "timetabledTime": "2026-04-03T21:30:00+02:00",
+                  "observedTime": "2026-04-03T21:30:00+02:00"
+                }
+              },
+              "intermediates": [
+                {
+                  "stopPlaceRef": {
+                    "stopPlaceRef": "012",
+                    "objectType": "StopPlaceRef"
+                  },
+                  "stopPlaceName": "Basel",
+                  "serviceArrival": {
+                    "timetabledTime": "2026-04-03T22:45:00+02:00",
+                    "observedTime": "2026-04-03T22:45:00+02:00"
+                  },
+                  "serviceDeparture": {
+                    "timetabledTime": "2026-04-03T23:00:00+02:00",
+                    "observedTime": "2026-04-03T23:00:00+02:00"
+                  }
+                },
+                {
+                  "stopPlaceRef": {
+                    "stopPlaceRef": "010",
+                    "objectType": "StopPlaceRef"
+                  },
+                  "stopPlaceName": "Luxembourg",
+                  "serviceArrival": {
+                    "timetabledTime": "2026-04-04T03:00:00+02:00",
+                    "observedTime": "2026-04-04T03:00:00+02:00"
+                  },
+                  "serviceDeparture": {
+                    "timetabledTime": "2026-04-04T03:15:00+02:00",
+                    "observedTime": "2026-04-04T03:15:00+02:00"
+                  }
+                }
+              ],
+              "end": {
+                "stopPlaceRef": {
+                  "stopPlaceRef": "009",
+                  "objectType": "StopPlaceRef"
+                },
+                "stopPlaceName": "Brussels",
+                "serviceArrival": {
+                  "timetabledTime": "2026-04-04T06:15:00+02:00",
+                  "observedTime": "2026-04-04T06:15:00+02:00"
+                }
+              },
+              "service": {
+                "mode": {
+                  "ptMode": "BUS",
+                  "name": "Bus",
+                  "shortName": "Bus"
+                },
+                "productCategory": {
+                  "name": "International",
+                  "shortName": "UT",
+                  "productCategoryRef": "UT"
+                },
+                "publishedServiceName": "Zurich - Amsterdam",
+                "vehicleNumbers": [
+                  "001ZA"
+                ],
+                "lineNumbers": [
+                  "ZRH-AMS"
+                ],
+                "carriers": [
+                  {
+                    "ref": "CH-020.3.049.775-0",
+                    "name": "Twiliner"
+                  }
+                ],
+                "attributes": []
+              },
+              "duration": "PT8H45M",
+              "isUnreservedService": false
+            },
+            "isActive": true
+          }
+        ],
+        "tripStatus": {
+          "unplanned": false,
+          "cancelled": false,
+          "deviation": false,
+          "delayed": false,
+          "infeasible": false
+        }
+      }
+    ],
+    "confirmationTimeLimit": "2026-03-22T12:27:56.137044Z",
+    "fulfillmentType": "ETICKET",
+    "fulfillments": [
+      {
+        "id": "32c54b68-6e76-40d9-8716-c7e849017afe",
+        "bookingRef": "95adefc8-6616-4d17-a915-2869e66f04c6",
+        "summary": "Fulfillment for booking part 260322963716",
+        "createdOn": "2026-03-22T12:12:56.139468Z",
+        "status": "FULFILLED",
+        "controlNumber": "260322963716",
+        "bookingParts": [
+          {
+            "id": "32c54b68-6e76-40d9-8716-c7e849017afe"
+          },
+          {
+            "id": "04ba797c-0382-421e-9663-0573fcb59467"
+          }
+        ],
+        "issuer": "CH-020.3.049.775-0",
+        "fulfillmentDocuments": [
+          {
+            "medium": "PDF_A4",
+            "type": "TICKET",
+            "downloadLink": "https://api.twiliner.turnit.com/retailer/ticket/32c54b68-6e76-40d9-8716-c7e849017afe",
+            "format": "application/pdf"
+          },
+          {
+            "medium": "PKPASS",
+            "type": "TICKET",
+            "downloadLink": "https://api.twiliner.turnit.com/retailer/pkpass/32c54b68-6e76-40d9-8716-c7e849017afe",
+            "format": "application/vnd.apple.pkpass"
+          }
+        ],
+        "fulfillmentParts": [
+          {
+            "securityFeatures": [
+              {
+                "type": {
+                  "type": "BAR_CODE",
+                  "format": "PNG",
+                  "symbology": "AZTEC"
+                },
+                "data": "iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAABHNCSVQICAgIfAhkiAAAAvBJREFUeJzt3UFu4zAQAEFrkf9/WbkZOex2siRCUULVOYFlGQ1eBsPjPM/zBfzVn6sfAHb2cfUD/MRxHP/9PyMH48jnjFj1bN7B2Od85QSBIBAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCO9hxVVDaqx71wYP5z/HCQJBIBAEAkEgEAQCQSAQBAJBIBAEAkEgEAQCQSAQbrFZcZWd1xRfsVUQJwgkgUAQCASBQBAIBIFAEAgEgUAQCASBQBAIBIFAOM7FE202OLI7mxXhhwQCQSAQBAJBIBAEAkEgEAQCQSAQBAJBIBAEAmHqGuiROcedrwxmzM5XOs9ygkAQCASBQBAIBIFAEAgEgUAQCASBQBAIBIFAEAiE97CiIUJbH1+vvX+fKwYcnSAQBAJBIBAEAkEgEAQCQSAQBAJBIBAEAkEgEAQC4eP7P/m3nQfbVtn5Hew8fHmXQVcnCASBQBAIBIFAEAgEgUAQCASBQBAIBIFAEAgEgUCYGlYcsfMA3Sp3GdTbjWugYTMCgSAQCAKBIBAIAoEgEAgCgSAQCAKBIBAIAoEwNaxo8HCMwcP7cIJAEAgEgUAQCASBQBAIBIFAEAgEgUAQCASBQBAIhOXXQD9twPFp32eVVQObs7+PEwSCQCAIBIJAIAgEgkAgCASCQCAIBIJAIAgEgkAgvIcVV11NvPOAo42H69zlKmwnCASBQBAIBIFAEAgEgUAQCASBQBAIBIFAEAgEgUCY2qy4MxsPn+eKAUcnCASBQBAIBIFAEAgEgUAQCASBQBAIBIFAEAgEgUC4xbDizlcGr9oU+bR3MGLk2Wa/jxMEgkAgCASCQCAIBIJAIAgEgkAgCASCQCAIBIJAIBzn4rt1d954uPM10E8bIlzFZkX4RQKBIBAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgTC1WdEA3ZinPdvTtkt+5QSBIBAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCMs3K8KdOEEgCATCJ51Pj6ODmcMzAAAAAElFTkSuQmCC"
+              },
+              {
+                "type": {
+                  "type": "BAR_CODE",
+                  "format": "TEXT",
+                  "symbology": "AZTEC"
+                },
+                "data": "MjYwMzIyOTYzNzE2"
+              }
+            ],
+            "status": "FULFILLED"
+          }
+        ]
+      }
+    ],
+    "paymentMethods": [],
+    "pendingVouchers": []
+  }
+}

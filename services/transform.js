@@ -30,7 +30,7 @@ function transformTurnitReservation(reservation) {
     const customerEmail = purchaser.email;
     const customerFirstName = purchaser.firstName;
     const customerLastName = purchaser.lastName;
-    const customerPhone = purchaser.phone || ''; // Phone might be missing in purchaser detail
+    const customerPhone = purchaser.phoneNumber || purchaser.phone || ''; // Updated to support phoneNumber
     const bookingReference = reservation.id || reservation.bookingCode;
 
     // Determine status roughly based on confirmed price or offers

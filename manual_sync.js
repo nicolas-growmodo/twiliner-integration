@@ -6,51 +6,59 @@ const Transform = require('./services/transform');
 // A helper function to create a delay
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-async function runHistoricalSync() {
-    console.log('--- STARTING HISTORICAL BREVO SYNC ---');
-    
+async function runManualSync() {
+    console.log('--- STARTING MANUAL TURNIT TO BREVO SYNC ---');
+
     // Parse CLI arguments: --since YYYY-MM-DD
     const sinceIdx = process.argv.indexOf('--since');
     let searchStartTimestamp = '2025-01-01T00:00:00.000Z'; // Default
 
     if (sinceIdx > -1 && process.argv[sinceIdx + 1]) {
         const providedDate = process.argv[sinceIdx + 1];
+        // Basic validation: ensure it's a date
         if (!isNaN(Date.parse(providedDate))) {
             searchStartTimestamp = new Date(providedDate).toISOString();
+        } else {
+            console.error(`ERROR: Invalid date format provided: ${providedDate}. Using default: ${searchStartTimestamp}`);
         }
     }
+
+    console.log(`Syncing bookings modified since: ${searchStartTimestamp}`);
 
     let totalProcessed = 0;
     let keepSearching = true;
 
     try {
         while (keepSearching) {
-            console.log(`\n> Searching Turnit for bookings modified since: ${searchStartTimestamp}`);
+            console.log(`\n> Querying Turnit batch...`);
             const bookings = await Turnit.searchBookings(searchStartTimestamp);
 
             if (bookings.length === 0) {
-                console.log('\n✅ No more bookings found. Historical sync complete.');
+                console.log('\n✅ No more bookings found in this range.');
                 break;
             }
 
-            console.log(`Found ${bookings.length} bookings in this batch.`);
+            console.log(`Found ${bookings.length} bookings to process.`);
 
             for (const summary of bookings) {
                 try {
                     const bookingId = summary.id || summary.bookingId;
                     if (!bookingId) continue;
 
-                    console.log(`[Sync] Processing Booking ID: ${bookingId}...`);
+                    console.log(`[Sync] Fetching ${bookingId}...`);
                     const fullBooking = await Turnit.getBookingDetails(bookingId);
 
-                    if (!fullBooking) continue;
+                    if (!fullBooking) {
+                        console.warn(`[Sync] Failed to get details for ${bookingId}.`);
+                        continue;
+                    }
 
-                    // Support for corrected object traversal (Fix for Brevo 400 errors)
+                    // Handle deep structure (Fix applied to matching poller logic)
                     const bookingData = fullBooking.booking || fullBooking.reservation || fullBooking;
                     const data = Transform.transformTurnitReservation(bookingData);
 
                     if (!data || !data.customer || !data.customer.email) {
-                        console.warn(`[Sync] Skipping ${bookingId}: Missing email.`);
+                        console.warn(`[Sync] Skipping ${bookingId}: Missing email or transform failed.`);
                         continue;
                     }
 
@@ -95,24 +103,26 @@ async function runHistoricalSync() {
                     await sleep(300);
 
                 } catch (err) {
-                    console.error(`[Sync] Error processing booking ${summary.id}:`, err.message);
+                    console.error(`[Sync] Error processing booking ${summary.id || 'N/A'}:`, err.message);
                 }
             }
 
+            // Pagination for batches of 100
             if (bookings.length === 100) {
                 const last = bookings[bookings.length - 1];
                 searchStartTimestamp = last.createdOn || last.modifiedOn;
+                console.log(`Advancing cursor to ${searchStartTimestamp}...`);
                 await sleep(1000);
             } else {
                 keepSearching = false;
             }
         }
 
-        console.log(`\n✅ HISTORICAL SYNC COMPLETE. Total: ${totalProcessed}`);
+        console.log(`\n✅ MANUAL SYNC COMPLETE. Total Processed: ${totalProcessed}`);
 
     } catch (error) {
         console.error('\n❌ Fatal Error:', error.message);
     }
 }
 
-runHistoricalSync();
+runManualSync();

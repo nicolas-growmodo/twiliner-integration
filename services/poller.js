@@ -60,22 +60,21 @@ async function runSync() {
                 const contactPayload = {
                     email: data.customer.email,
                     attributes: {
-                        FNAME: data.customer.firstName,
-                        LNAME: data.customer.lastName,
-                        ...(data.customer.phone ? { SMS: data.customer.phone } : {}),
-                        BOOKING_REF: data.booking.reference,
-                        DEPARTURE_DATE: data.booking.departureDate,
-                        ARRIVAL_DATE: data.booking.arrivalDate,
-                        PRE_TRAVEL_DATE: data.booking.preTravelDate,
-                        POST_TRAVEL_DATE: data.booking.postTravelDate,
-                        PAYMENT_STATUS: data.booking.status
+                        VORNAME: data.customer.firstName,
+                        NACHNAME: data.customer.lastName,
+                        ...(data.customer.phone ? { SMS: data.customer.phone } : {})
                     },
+                    ...(process.env.BREVO_LIST_ID ? { listIds: [parseInt(process.env.BREVO_LIST_ID)] } : {}),
                     updateEnabled: true
                 };
 
                 try {
+                    const updatePayload = {
+                        attributes: contactPayload.attributes,
+                        ...(contactPayload.listIds ? { listIds: contactPayload.listIds } : {})
+                    };
                     // Try to explicitly update via PUT first, ensuring all attributes rewrite correctly
-                    await Brevo.updateContactInBrevo(data.customer.email, { attributes: contactPayload.attributes });
+                    await Brevo.updateContactInBrevo(data.customer.email, updatePayload);
                 } catch (updateErr) {
                     // If contact doesn't exist (404), create it via POST
                     console.log(`[Worker] Contact not found for update, creating new contact...`);

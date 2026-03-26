@@ -29,6 +29,7 @@ const BOOKING_ID = '95adefc8-6616-4d17-a915-2869e66f04c6';
         // Handle the wrapper if present
         const bookingData = rawResponse.booking || rawResponse.reservation || rawResponse;
         const data = Transform.transformTurnitReservation(bookingData);
+        console.log(data);
 
         if (!data) {
             console.error('❌ FAILED: Transformation returned null.');

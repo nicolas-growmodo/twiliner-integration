@@ -59,10 +59,11 @@ async function runNameFix() {
                     // Using PUT /contacts endpoint to explicitly update
                     const updatePayload = {
                         attributes: {
-                            FNAME: data.customer.firstName,
-                            LNAME: data.customer.lastName,
+                            VORNAME: data.customer.firstName,
+                            NACHNAME: data.customer.lastName,
                             ...(data.customer.phone ? { SMS: data.customer.phone } : {})
-                        }
+                        },
+                        ...(process.env.BREVO_LIST_ID ? { listIds: [parseInt(process.env.BREVO_LIST_ID)] } : {})
                     };
 
                     await Brevo.updateContactInBrevo(data.customer.email, updatePayload);

@@ -49,58 +49,65 @@ async function runSync() {
                 const bookingData = fullBooking.booking || fullBooking.reservation || fullBooking;
                 const data = Transform.transformTurnitReservation(bookingData);
 
-                if (!data || !data.customer || !data.customer.email) {
-                    console.warn(`[Worker] Skipping booking ${bookingId}: Missing customer email or transformation failed.`);
+                if (!data || !data.contacts || data.contacts.length === 0) {
+                    console.warn(`[Worker] Skipping booking ${bookingId}: No valid emails found or transformation failed.`);
                     continue;
                 }
 
-                console.log(`[Worker] Transformed Booking ${bookingId} - Email: ${data.customer.email}`);
+                console.log(`[Worker] Transformed Booking ${bookingId} - Found ${data.contacts.length} unique contacts to sync.`);
 
-                // 5. Sync to Brevo
-                const contactPayload = {
-                    email: data.customer.email,
-                    attributes: {
-                        VORNAME: data.customer.firstName,
-                        NACHNAME: data.customer.lastName,
-                        ...(data.customer.phone ? { SMS: data.customer.phone } : {})
-                    },
-                    ...(process.env.BREVO_LIST_ID ? { listIds: [parseInt(process.env.BREVO_LIST_ID)] } : {}),
-                    updateEnabled: true
-                };
-
-                try {
-                    const updatePayload = {
-                        attributes: contactPayload.attributes,
-                        ...(contactPayload.listIds ? { listIds: contactPayload.listIds } : {})
-                    };
-                    // Try to explicitly update via PUT first, ensuring all attributes rewrite correctly
-                    await Brevo.updateContactInBrevo(data.customer.email, updatePayload);
-                } catch (updateErr) {
-                    // If contact doesn't exist (404), create it via POST
-                    console.log(`[Worker] Contact not found for update, creating new contact...`);
-                    await Brevo.syncContactToBrevo(contactPayload);
-                }
-
-                // If it's an unconfirmed/failed booking, push a cart abandonment track event
-                if (['pending', 'failed'].includes(data.booking.status)) {
-                    const eventPayload = {
-                        event_name: 'cart_updated',
-                        identifiers: {
-                            email_id: data.customer.email
+                // 5. Sync each contact (purchaser and passengers) to Brevo
+                for (const contact of data.contacts) {
+                    const contactPayload = {
+                        email: contact.email,
+                        attributes: {
+                            VORNAME: contact.firstName,
+                            NACHNAME: contact.lastName,
+                            ...(data.booking.bookingCode ? { BOOKING_CODE: data.booking.bookingCode } : {}),
+                            ...(data.booking.departureDate ? { DEPARTURE_DATE: data.booking.departureDate } : {}),
+                            ...(data.booking.arrivalDate ? { ARRIVAL_DATE: data.booking.arrivalDate } : {}),
+                            ...((data.booking.origin && data.booking.origin !== 'Unknown') ? { ORIGIN: data.booking.origin } : {}),
+                            ...((data.booking.destination && data.booking.destination !== 'Unknown') ? { DESTINATION: data.booking.destination } : {}),
+                            ...(contact.phone ? { SMS: contact.phone } : {})
                         },
-                        event_properties: {
-                            firstname: data.customer.firstName,
-                            lastname: data.customer.lastName,
-                            id: data.booking.reference,
-                            price: data.booking.totalPrice,
-                            currency: data.booking.currency,
-                            status: data.booking.status,
-                            departure_date: data.booking.departureDate,
-                            origin: data.booking.origin,
-                            destination: data.booking.destination
-                        }
+                        ...(process.env.BREVO_LIST_ID ? { listIds: [parseInt(process.env.BREVO_LIST_ID)] } : {}),
+                        updateEnabled: true
                     };
-                    await Brevo.trackEventInBrevo(eventPayload);
+
+                    try {
+                        const updatePayload = {
+                            attributes: contactPayload.attributes,
+                            ...(contactPayload.listIds ? { listIds: contactPayload.listIds } : {})
+                        };
+                        // Try to explicitly update via PUT first, ensuring all attributes rewrite correctly
+                        await Brevo.updateContactInBrevo(contact.email, updatePayload);
+                    } catch (updateErr) {
+                        // If contact doesn't exist (404), create it via POST
+                        console.log(`[Worker] Contact not found for update, creating new contact...`);
+                        await Brevo.syncContactToBrevo(contactPayload);
+                    }
+
+                    // If it's an unconfirmed/failed booking, push a cart abandonment track event
+                    if (['pending', 'failed'].includes(data.booking.status)) {
+                        const eventPayload = {
+                            event_name: 'cart_updated',
+                            identifiers: {
+                                email_id: contact.email
+                            },
+                            event_properties: {
+                                firstname: contact.firstName,
+                                lastname: contact.lastName,
+                                id: data.booking.reference,
+                                price: data.booking.totalPrice,
+                                currency: data.booking.currency,
+                                status: data.booking.status,
+                                departure_date: data.booking.departureDate,
+                                origin: data.booking.origin,
+                                destination: data.booking.destination
+                            }
+                        };
+                        await Brevo.trackEventInBrevo(eventPayload);
+                    }
                 }
 
             } catch (err) {

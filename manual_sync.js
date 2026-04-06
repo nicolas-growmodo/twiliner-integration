@@ -68,6 +68,11 @@ async function runManualSync() {
                         attributes: {
                             VORNAME: data.customer.firstName,
                             NACHNAME: data.customer.lastName,
+                            ...(data.booking.bookingCode ? { BOOKING_CODE: data.booking.bookingCode } : {}),
+                            ...(data.booking.departureDate ? { DEPARTURE_DATE: data.booking.departureDate } : {}),
+                            ...(data.booking.arrivalDate ? { ARRIVAL_DATE: data.booking.arrivalDate } : {}),
+                            ...((data.booking.origin && data.booking.origin !== 'Unknown') ? { ORIGIN: data.booking.origin } : {}),
+                            ...((data.booking.destination && data.booking.destination !== 'Unknown') ? { DESTINATION: data.booking.destination } : {}),
                             ...(data.customer.phone ? { SMS: data.customer.phone } : {})
                         },
                         ...(process.env.BREVO_LIST_ID ? { listIds: [parseInt(process.env.BREVO_LIST_ID)] } : {}),

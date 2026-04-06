@@ -6,7 +6,7 @@ const Brevo = require('./services/brevo');
 (async () => {
     console.log('--- TESTING FULL INTEGRATION FLOW ---');
 
-    const BOOKING_ID = 'e62d16d8-76ca-4469-8d5a-e43ff618fb14'; // Known valid ID
+    const BOOKING_ID = '04ac6940-d720-4746-9f55-24c89da24464'; // Known valid ID
 
     try {
         // 1. Fetch from Turnit
@@ -48,32 +48,35 @@ const Brevo = require('./services/brevo');
         // or just use the real one if it's a test account.
         // For safety, let's log what we WOULD do.
 
+        console.log(`\nFound ${transformed.contacts.length} unique contacts (passengers + purchaser).`);
+
         if (!process.env.BREVO_API_KEY) {
             console.warn('SKIPPING PUSH: No BREVO_API_KEY in .env');
             return;
         }
 
-        console.log(`Syncing contact: ${transformed.customer.email}`);
+        for (const contact of transformed.contacts) {
+            console.log(`\nSyncing contact: ${contact.email} (${contact.firstName} ${contact.lastName})`);
 
-        const contactPayload = {
-            email: transformed.customer.email,
-            attributes: {
-                FIRSTNAME: transformed.customer.firstName,
-                LASTNAME: transformed.customer.lastName,
-                ...(transformed.customer.phone ? { SMS: transformed.customer.phone } : {}),
-                BOOKING_REF: transformed.booking.reference,
-                DEPARTURE_DATE: transformed.booking.departureDate,
-                ARRIVAL_DATE: transformed.booking.arrivalDate,
-                PRE_TRAVEL_DATE: transformed.booking.preTravelDate,
-                POST_TRAVEL_DATE: transformed.booking.postTravelDate,
-                PAYMENT_STATUS: transformed.booking.status
-            },
-            updateEnabled: true
-        };
+            const contactPayload = {
+                email: contact.email,
+                attributes: {
+                    VORNAME: contact.firstName, // Changed to VORNAME based on actual attribute mappings
+                    NACHNAME: contact.lastName, // Changed to NACHNAME based on actual attribute mappings
+                    ...(contact.phone ? { SMS: contact.phone } : {}),
+                    ...(transformed.booking.bookingCode ? { BOOKING_CODE: transformed.booking.bookingCode } : {}),
+                    DEPARTURE_DATE: transformed.booking.departureDate,
+                    ARRIVAL_DATE: transformed.booking.arrivalDate,
+                    PRE_TRAVEL_DATE: transformed.booking.preTravelDate,
+                    POST_TRAVEL_DATE: transformed.booking.postTravelDate,
+                    PAYMENT_STATUS: transformed.booking.status
+                },
+                updateEnabled: true
+            };
 
-        const result = await Brevo.syncContactToBrevo(contactPayload);
-        console.log('✅ Brevo Sync Successful!');
-        console.log('Result:', result);
+            const result = await Brevo.syncContactToBrevo(contactPayload);
+            console.log(`✅ Brevo Sync Successful for ${contact.email}`);
+        }
 
     } catch (error) {
         console.error('❌ Integration Test Failed:', error.message);

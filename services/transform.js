@@ -32,6 +32,7 @@ function transformTurnitReservation(reservation) {
     const customerLastName = purchaser.lastName;
     const customerPhone = purchaser.phoneNumber || purchaser.phone || ''; // Updated to support phoneNumber
     const bookingReference = reservation.id || reservation.bookingCode;
+    const bookingCode = reservation.bookingCode || '';
 
     // Determine status roughly based on confirmed price or offers
     const paymentStatus = reservation.confirmedPrice && reservation.confirmedPrice.amount > 0 ? 'confirmed' : 'pending';
@@ -88,16 +89,46 @@ function transformTurnitReservation(reservation) {
     const totalPrice = reservation.confirmedPrice ? reservation.confirmedPrice.amount / Math.pow(10, reservation.confirmedPrice.scale) : 0;
     const currency = reservation.confirmedPrice ? reservation.confirmedPrice.currency : 'EUR';
 
+    // --- Extract Unique Contacts (Purchaser + Passengers) ---
+    const contactsMap = new Map();
+
+    // 1. Add purchaser
+    if (purchaser.email) {
+        contactsMap.set(purchaser.email.toLowerCase(), {
+            email: purchaser.email,
+            firstName: purchaser.firstName || '',
+            lastName: purchaser.lastName || '',
+            phone: purchaser.phoneNumber || purchaser.phone || ''
+        });
+    }
+
+    // 2. Add passengers
+    if (reservation.passengers && Array.isArray(reservation.passengers)) {
+        reservation.passengers.forEach(p => {
+            if (p.detail && p.detail.email) {
+                const email = p.detail.email.toLowerCase();
+                if (!contactsMap.has(email)) {
+                    contactsMap.set(email, {
+                        email: p.detail.email,
+                        firstName: p.detail.firstName || '',
+                        lastName: p.detail.lastName || '',
+                        phone: p.detail.phoneNumber || p.detail.phone || ''
+                    });
+                }
+            }
+        });
+    }
+
+    const contacts = Array.from(contactsMap.values());
+    const primaryCustomer = contacts.length > 0 ? contacts[0] : null;
+
     // Return standardized structure
     return {
-        customer: {
-            email: customerEmail,
-            firstName: customerFirstName,
-            lastName: customerLastName,
-            phone: customerPhone
-        },
+        customer: primaryCustomer, // Kept for backwards compatibility
+        contacts: contacts,        // Array of all unique passengers/purchaser
         booking: {
             reference: bookingReference,
+            bookingCode: bookingCode,
             status: paymentStatus,
             totalPrice: totalPrice,
             currency: currency,

@@ -3,7 +3,7 @@ const Turnit = require('./services/turnit');
 const Transform = require('./services/transform');
 const fs = require('fs');
 
-const BOOKING_ID = '95adefc8-6616-4d17-a915-2869e66f04c6';
+const BOOKING_ID = '04ac6940-d720-4746-9f55-24c89da24464';
 
 (async () => {
     console.log(`--- PROBING BOOKING: ${BOOKING_ID} ---`);

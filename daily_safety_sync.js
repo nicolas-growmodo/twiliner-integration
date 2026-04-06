@@ -6,19 +6,13 @@ const Transform = require('./services/transform');
 // A helper function to create a delay
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-async function runHistoricalSync() {
-    console.log('--- STARTING HISTORICAL BREVO SYNC ---');
+async function runSafetySync() {
+    console.log('--- STARTING DAILY SAFETY SYNC (LAST 48 HOURS) ---');
     
-    // Parse CLI arguments: --since YYYY-MM-DD
-    const sinceIdx = process.argv.indexOf('--since');
-    let searchStartTimestamp = '2025-01-01T00:00:00.000Z'; // Default
-
-    if (sinceIdx > -1 && process.argv[sinceIdx + 1]) {
-        const providedDate = process.argv[sinceIdx + 1];
-        if (!isNaN(Date.parse(providedDate))) {
-            searchStartTimestamp = new Date(providedDate).toISOString();
-        }
-    }
+    // Calculate timestamp for 48 hours ago to catch anything missed
+    const date = new Date();
+    date.setHours(date.getHours() - 48);
+    let searchStartTimestamp = date.toISOString();
 
     let totalProcessed = 0;
     let keepSearching = true;
@@ -29,7 +23,7 @@ async function runHistoricalSync() {
             const bookings = await Turnit.searchBookings(searchStartTimestamp);
 
             if (bookings.length === 0) {
-                console.log('\n✅ No more bookings found. Historical sync complete.');
+                console.log('\n✅ No more bookings found. Daily safety sync complete.');
                 break;
             }
 
@@ -40,18 +34,16 @@ async function runHistoricalSync() {
                     const bookingId = summary.id || summary.bookingId;
                     if (!bookingId) continue;
 
-                    console.log(`[Sync] Processing Booking ID: ${bookingId}...`);
+                    console.log(`[Safety Sync] Processing Booking ID: ${bookingId}...`);
                     const fullBooking = await Turnit.getBookingDetails(bookingId);
 
                     if (!fullBooking) continue;
 
-                    // Support for corrected object traversal (Fix for Brevo 400 errors)
                     const bookingData = fullBooking.booking || fullBooking.reservation || fullBooking;
                     const data = Transform.transformTurnitReservation(bookingData);
 
                     if (!data || !data.contacts || data.contacts.length === 0) {
-                        console.warn(`[Sync] Skipping ${bookingId}: No valid emails found.`);
-                        continue;
+                        continue; // Skip silently to reduce log noise
                     }
 
                     // Push each contact to Brevo
@@ -94,13 +86,14 @@ async function runHistoricalSync() {
                     }
 
                     totalProcessed++;
-                    await sleep(300);
+                    await sleep(300); // 300ms delay to respect API rate limits
 
                 } catch (err) {
-                    console.error(`[Sync] Error processing booking ${summary.id}:`, err.message);
+                    console.error(`[Safety Sync] Error processing booking ${summary.id}:`, err.message);
                 }
             }
 
+            // Pagination mechanism: if we hit the limit, set the next search timestamp to the last booking's time
             if (bookings.length === 100) {
                 const last = bookings[bookings.length - 1];
                 searchStartTimestamp = last.createdOn || last.modifiedOn;
@@ -110,11 +103,25 @@ async function runHistoricalSync() {
             }
         }
 
-        console.log(`\n✅ HISTORICAL SYNC COMPLETE. Total: ${totalProcessed}`);
+        console.log(`\n✅ DAILY SAFETY SYNC COMPLETE. Total processed/checked: ${totalProcessed}`);
 
     } catch (error) {
-        console.error('\n❌ Fatal Error:', error.message);
+        console.error('\n❌ Fatal Error during daily safety sync:', error.message);
     }
 }
 
-runHistoricalSync();
+// -------------------------------------------------------------
+// TIMER: Run immediately on startup, then every 24 hours
+// -------------------------------------------------------------
+const TWENTY_FOUR_HOURS_IN_MS = 24 * 60 * 60 * 1000;
+
+console.log('Starting Daily Safety Sync process...');
+
+// Run it immediately
+runSafetySync();
+
+// And again every 24 hours
+setInterval(() => {
+    console.log(`\n[${new Date().toISOString()}] Initiating scheduled 24-hour safety sync...`);
+    runSafetySync();
+}, TWENTY_FOUR_HOURS_IN_MS);

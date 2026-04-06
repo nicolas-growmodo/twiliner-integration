@@ -49,26 +49,32 @@ async function runNameFix() {
                     const bookingData = fullBooking.booking || fullBooking.reservation || fullBooking;
                     const data = Transform.transformTurnitReservation(bookingData);
 
-                    if (!data || !data.customer || !data.customer.email) {
+                    if (!data || !data.contacts || data.contacts.length === 0) {
                         continue;
                     }
 
-                    console.log(`[Fixing] ${data.customer.email}...`);
-
                     // 🚨 THE FIX PAYLOAD 🚨
-                    // Using PUT /contacts endpoint to explicitly update
-                    const updatePayload = {
-                        attributes: {
-                            VORNAME: data.customer.firstName,
-                            NACHNAME: data.customer.lastName,
-                            ...(data.customer.phone ? { SMS: data.customer.phone } : {})
-                        },
-                        ...(process.env.BREVO_LIST_ID ? { listIds: [parseInt(process.env.BREVO_LIST_ID)] } : {})
-                    };
+                    for (const contact of data.contacts) {
+                        console.log(`[Fixing] ${contact.email}...`);
 
-                    await Brevo.updateContactInBrevo(data.customer.email, updatePayload);
-                    totalProcessed++;
-                    await sleep(300); // Respect rate limits
+                        const updatePayload = {
+                            attributes: {
+                                VORNAME: contact.firstName,
+                                NACHNAME: contact.lastName,
+                                ...(data.booking.bookingCode ? { BOOKING_CODE: data.booking.bookingCode } : {}),
+                                ...(data.booking.departureDate ? { DEPARTURE_DATE: data.booking.departureDate } : {}),
+                                ...(data.booking.arrivalDate ? { ARRIVAL_DATE: data.booking.arrivalDate } : {}),
+                                ...((data.booking.origin && data.booking.origin !== 'Unknown') ? { ORIGIN: data.booking.origin } : {}),
+                                ...((data.booking.destination && data.booking.destination !== 'Unknown') ? { DESTINATION: data.booking.destination } : {}),
+                                ...(contact.phone ? { SMS: contact.phone } : {})
+                            },
+                            ...(process.env.BREVO_LIST_ID ? { listIds: [parseInt(process.env.BREVO_LIST_ID)] } : {})
+                        };
+
+                        await Brevo.updateContactInBrevo(contact.email, updatePayload);
+                        totalProcessed++;
+                        await sleep(300); // Respect rate limits
+                    }
 
                 } catch (err) {
                     console.error(`[Error] Failed to fix booking ${summary.id}:`, err.message);

@@ -63,9 +63,14 @@ async function runSync() {
                         attributes: {
                             VORNAME: contact.firstName,
                             NACHNAME: contact.lastName,
+                            BOOKING_STATUS: (data.booking.status || 'unknown').toUpperCase(),
                             ...(data.booking.bookingCode ? { BOOKING_CODE: data.booking.bookingCode } : {}),
+                            ...(data.booking.ticketNumber ? { TICKET_NUMBER: data.booking.ticketNumber } : {}),
+                            ...(data.booking.totalPrice !== undefined ? { BOOKING_PRICE: data.booking.totalPrice } : {}),
                             ...(data.booking.departureDate ? { DEPARTURE_DATE: data.booking.departureDate } : {}),
+                            ...(data.booking.departureTime ? { DEPARTURE_TIME: data.booking.departureTime } : {}),
                             ...(data.booking.arrivalDate ? { ARRIVAL_DATE: data.booking.arrivalDate } : {}),
+                            ...(data.booking.arrivalTime ? { ARRIVAL_TIME: data.booking.arrivalTime } : {}),
                             ...((data.booking.origin && data.booking.origin !== 'Unknown') ? { ORIGIN: data.booking.origin } : {}),
                             ...((data.booking.destination && data.booking.destination !== 'Unknown') ? { DESTINATION: data.booking.destination } : {}),
                             ...(contact.phone ? { SMS: contact.phone } : {})

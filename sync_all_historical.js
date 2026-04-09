@@ -20,6 +20,20 @@ async function runHistoricalSync() {
         }
     }
 
+    // Parse CLI arguments: --status REFUNDED CANCELLED RELEASED
+    const statusIdx = process.argv.indexOf('--status');
+    const statusFilters = [];
+    if (statusIdx > -1) {
+        for (let i = statusIdx + 1; i < process.argv.length; i++) {
+            if (process.argv[i].startsWith('--')) break;
+            statusFilters.push(process.argv[i].toUpperCase());
+        }
+    }
+    
+    if (statusFilters.length > 0) {
+        console.log(`Filtering final push for statuses: ${statusFilters.join(', ')}`);
+    }
+
     let totalProcessed = 0;
     let keepSearching = true;
 
@@ -54,6 +68,13 @@ async function runHistoricalSync() {
                         continue;
                     }
 
+                    const pushStatus = (data.booking.status || 'unknown').toUpperCase();
+
+                    // If the user provided --status filters, ONLY push if this booking's status matches!
+                    if (statusFilters.length > 0 && !statusFilters.includes(pushStatus)) {
+                        continue; // Skip this booking entirely because its status is not one of the filtered statuses
+                    }
+
                     // Push each contact to Brevo
                     for (const contact of data.contacts) {
                         const contactPayload = {
@@ -61,9 +82,14 @@ async function runHistoricalSync() {
                             attributes: {
                                 VORNAME: contact.firstName,
                                 NACHNAME: contact.lastName,
+                                BOOKING_STATUS: (data.booking.status || 'unknown').toUpperCase(),
                                 ...(data.booking.bookingCode ? { BOOKING_CODE: data.booking.bookingCode } : {}),
+                                ...(data.booking.ticketNumber ? { TICKET_NUMBER: data.booking.ticketNumber } : {}),
+                                ...(data.booking.totalPrice !== undefined ? { BOOKING_PRICE: data.booking.totalPrice } : {}),
                                 ...(data.booking.departureDate ? { DEPARTURE_DATE: data.booking.departureDate } : {}),
+                                ...(data.booking.departureTime ? { DEPARTURE_TIME: data.booking.departureTime } : {}),
                                 ...(data.booking.arrivalDate ? { ARRIVAL_DATE: data.booking.arrivalDate } : {}),
+                                ...(data.booking.arrivalTime ? { ARRIVAL_TIME: data.booking.arrivalTime } : {}),
                                 ...((data.booking.origin && data.booking.origin !== 'Unknown') ? { ORIGIN: data.booking.origin } : {}),
                                 ...((data.booking.destination && data.booking.destination !== 'Unknown') ? { DESTINATION: data.booking.destination } : {}),
                                 ...(contact.phone ? { SMS: contact.phone } : {})

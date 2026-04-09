@@ -22,8 +22,27 @@ async function syncContactToBrevo(payload) {
         return response.data;
     } catch (error) {
         if (error.response) {
-            console.error(`[Brevo Error] Sync Contact Failed. Status: ${error.response.status}`, error.response.data);
-            throw new Error(`Brevo Sync Failed: ${error.response.status}`);
+            const resData = error.response.data;
+            
+            // Handle specific case where SMS is already taken by another contact
+            if (resData && resData.code === 'duplicate_parameter' && resData.message && resData.message.includes('SMS')) {
+                console.warn(`[Brevo] SMS already associated with another contact. Retrying without SMS...`);
+                if (payload.attributes && payload.attributes.SMS) {
+                    const retryPayload = JSON.parse(JSON.stringify(payload));
+                    delete retryPayload.attributes.SMS;
+                    try {
+                        const retryResponse = await axios.post(`${BREVO_API_URL}/contacts`, retryPayload, { headers: getHeaders() });
+                        console.log(`[Brevo] Contact synced successfully (without SMS). ID: ${retryResponse.data.id || 'Updated'}`);
+                        return retryResponse.data;
+                    } catch (retryError) {
+                        console.error(`[Brevo Error] Retry Sync Failed.`, retryError.response ? retryError.response.data : '');
+                        throw new Error(`Brevo Sync Retry Failed`);
+                    }
+                }
+            }
+
+            console.error(`[Brevo Error] Sync Contact Failed. Status: ${error.response.status}`, resData);
+            throw new Error(`Brevo Sync Failed: ${error.response.status} - ${resData.message || ''}`);
         } else {
             console.error(`[Brevo Error] ${error.message}`);
             throw error;
@@ -43,8 +62,27 @@ async function updateContactInBrevo(email, payload) {
         return response.data;
     } catch (error) {
         if (error.response) {
-            console.error(`[Brevo Error] Update Contact Failed. Status: ${error.response.status}`, error.response.data);
-            throw new Error(`Brevo Update Failed: ${error.response.status}`);
+            const resData = error.response.data;
+            
+            // Handle specific case where SMS is already taken by another contact
+            if (resData && resData.code === 'duplicate_parameter' && resData.message && resData.message.includes('SMS')) {
+                console.warn(`[Brevo] SMS already associated with another contact. Retrying update without SMS...`);
+                if (payload.attributes && payload.attributes.SMS) {
+                    const retryPayload = JSON.parse(JSON.stringify(payload));
+                    delete retryPayload.attributes.SMS;
+                    try {
+                        const retryResponse = await axios.put(`${BREVO_API_URL}/contacts/${encodeURIComponent(email)}?identifierType=email_id`, retryPayload, { headers: getHeaders() });
+                        console.log(`[Brevo] Contact updated successfully (without SMS). Email: ${email}`);
+                        return retryResponse.data;
+                    } catch (retryError) {
+                        console.error(`[Brevo Error] Retry Update Failed.`, retryError.response ? retryError.response.data : '');
+                        throw new Error(`Brevo Update Retry Failed`);
+                    }
+                }
+            }
+
+            console.error(`[Brevo Error] Update Contact Failed. Status: ${error.response.status}`, resData);
+            throw new Error(`Brevo Update Failed: ${error.response.status} - ${resData.message || ''}`);
         } else {
             console.error(`[Brevo Error] ${error.message}`);
             throw error;

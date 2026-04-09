@@ -35,7 +35,43 @@ function transformTurnitReservation(reservation) {
     const bookingCode = reservation.bookingCode || '';
 
     // Determine status roughly based on confirmed price or offers
-    const paymentStatus = reservation.confirmedPrice && reservation.confirmedPrice.amount > 0 ? 'confirmed' : 'pending';
+    let paymentStatus = reservation.confirmedPrice && reservation.confirmedPrice.amount > 0 ? 'confirmed' : 'pending';
+    
+    // Check for refunded or cancelled status in bookedOffers or admissions
+    if (reservation.bookedOffers && reservation.bookedOffers.length > 0) {
+        const statuses = [];
+        reservation.bookedOffers.forEach(o => {
+            if (o.status) statuses.push(o.status);
+            if (o.admissions && o.admissions.length > 0) {
+                o.admissions.forEach(a => { if (a.status) statuses.push(a.status); });
+            }
+        });
+
+        const allRefunded = statuses.length > 0 && statuses.every(s => s === 'REFUNDED');
+        const allCancelled = statuses.length > 0 && statuses.every(s => s === 'CANCELLED');
+        const allReleased = statuses.length > 0 && statuses.every(s => s === 'RELEASED');
+        const anyRefunded = statuses.some(s => s === 'REFUNDED');
+        const anyCancelled = statuses.some(s => s === 'CANCELLED');
+        const anyReleased = statuses.some(s => s === 'RELEASED');
+
+        if (allRefunded) {
+            paymentStatus = 'refunded';
+        } else if (allCancelled) {
+            paymentStatus = 'cancelled';
+        } else if (allReleased) {
+            paymentStatus = 'released'; // Maps to RELEASED in Brevo
+        } else if (anyRefunded || anyCancelled || anyReleased) {
+            // Partially refunded/cancelled/released is still a significant state, default to confirmed if there's confirmed price
+            if (reservation.confirmedPrice && reservation.confirmedPrice.amount === 0) {
+                paymentStatus = anyRefunded ? 'refunded' : (anyCancelled ? 'cancelled' : 'released');
+            }
+        }
+    } else if (reservation.status) {
+        // Fallback to root status if returned directly
+        if (reservation.status === 'REFUNDED' || reservation.status === 'CANCELLED') {
+            paymentStatus = reservation.status.toLowerCase();
+        }
+    }
 
     let departureDateStr = '';
     let arrivalDateStr = '';
@@ -85,9 +121,24 @@ function transformTurnitReservation(reservation) {
     const formattedDepartureDate = formatDate(departureDate);
     const formattedArrivalDate = formatDate(arrivalDate);
 
+    // Extract exact time string to avoid UTC shifting
+    const extractTime = (dateStr) => {
+        if (!dateStr) return '';
+        const match = dateStr.match(/T(\d{2}:\d{2})/);
+        return match ? match[1] : '';
+    };
+    const departureTime = extractTime(departureDateStr);
+    const arrivalTime = extractTime(arrivalDateStr);
+
     // Price
     const totalPrice = reservation.confirmedPrice ? reservation.confirmedPrice.amount / Math.pow(10, reservation.confirmedPrice.scale) : 0;
     const currency = reservation.confirmedPrice ? reservation.confirmedPrice.currency : 'EUR';
+
+    // Get Ticket Number from fulfillments
+    let ticketNumber = '';
+    if (reservation.fulfillments && Array.isArray(reservation.fulfillments)) {
+        ticketNumber = reservation.fulfillments.filter(f => f.controlNumber).map(f => f.controlNumber).join(', ');
+    }
 
     // --- Extract Unique Contacts (Purchaser + Passengers) ---
     const contactsMap = new Map();
@@ -129,11 +180,14 @@ function transformTurnitReservation(reservation) {
         booking: {
             reference: bookingReference,
             bookingCode: bookingCode,
+            ticketNumber: ticketNumber, // Added ticket number
             status: paymentStatus,
             totalPrice: totalPrice,
             currency: currency,
             departureDate: formattedDepartureDate,
+            departureTime: departureTime, // Added departure time
             arrivalDate: formattedArrivalDate,
+            arrivalTime: arrivalTime, // Added arrival time
             preTravelDate: formattedPreTravelDate,
             postTravelDate: formattedPostTravelDate,
             origin: origin,

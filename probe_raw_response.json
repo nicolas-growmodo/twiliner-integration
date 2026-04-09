@@ -1,48 +1,34 @@
 {
   "booking": {
-    "id": "d541f657-faae-4664-baad-acb362e144fa",
-    "bookingCode": "DVACFA",
-    "externalRef": "12f97f65-20bb-45f2-901a-8f185ace43cf",
-    "summary": "Booking DVACFA",
-    "createdOn": "2026-04-04T08:41:34.308954Z",
+    "id": "5fec458a-1a70-4f0d-8727-24fc403af250",
+    "bookingCode": "CAG48R",
+    "externalRef": "cce1bc2a-797b-4668-ada8-c6fe832d8586",
+    "summary": "Booking CAG48R",
+    "createdOn": "2026-04-02T13:21:18.930573Z",
     "passengers": [
       {
-        "id": "2ef95850-254e-45fd-98c5-b422008f414e",
-        "externalRef": "de5b6039-c79c-40bf-a94e-290442734d58",
+        "id": "15c548fa-72a4-4c2c-aed9-b42000dc16b9",
+        "externalRef": "4825a6cd-f2c3-42a1-964f-f84b1572633a",
         "type": "PERSON",
         "cards": [],
         "detail": {
-          "firstName": "Sileno",
-          "lastName": "Truog",
-          "email": "info@maratruog.ch",
-          "phoneNumber": "+41763298527"
-        },
-        "prmNeeds": [],
-        "sharePlaceWithGuardian": false
-      },
-      {
-        "id": "e68d4b7c-02f1-422e-a31f-b422008f4151",
-        "externalRef": "1adc9123-b4ea-447a-b70e-930c6d20dbc2",
-        "type": "PERSON",
-        "cards": [],
-        "detail": {
-          "firstName": "Mara",
-          "lastName": "Truog",
-          "email": "info@maratruog.ch",
-          "phoneNumber": "+41763298527"
+          "firstName": "Delaia",
+          "lastName": "Tschannen",
+          "email": "delaia.tschannen@twiliner.com",
+          "phoneNumber": "+41774070311"
         },
         "prmNeeds": [],
         "sharePlaceWithGuardian": false
       }
     ],
     "purchaser": {
-      "externalRef": "1adc9123-b4ea-447a-b70e-930c6d20dbc2",
+      "externalRef": "4825a6cd-f2c3-42a1-964f-f84b1572633a",
       "detail": {
         "preferredLanguage": "CULTURE.EN_GB",
-        "firstName": "Mara",
-        "lastName": "Truog",
-        "email": "info@maratruog.ch",
-        "phoneNumber": "+41763298527"
+        "firstName": "Delaia",
+        "lastName": "Tschannen",
+        "email": "delaia.tschannen@twiliner.com",
+        "phoneNumber": "+41774070311"
       }
     },
     "provisionalPrice": {
@@ -54,21 +40,21 @@
     "confirmedPrice": {
       "vats": [],
       "currency": "CHF",
-      "amount": 31200,
+      "amount": 0,
       "scale": 2
     },
     "isFinalPaymentRequired": false,
     "isPlaceChangeInProgress": false,
     "bookedOffers": [
       {
-        "offerId": "fa3fea95-f024-40f7-baee-99a0a911bab6",
+        "offerId": "2015b2d5-90ed-4521-bd8e-95e300d2f292",
         "admissions": [
           {
             "isReservationRequired": true,
             "feeRefs": [],
             "reservationRefs": [
               {
-                "id": "ba5b3f5f-6424-443c-8c22-ebe391081c23"
+                "id": "4686912d-0d51-4d8a-a8c2-e6fd06598baa"
               }
             ],
             "ancillaryRefs": [],
@@ -76,122 +62,59 @@
               "CIV"
             ],
             "objectType": "Admission",
-            "id": "b0c8982b-7af3-451e-9341-f42544005e4a",
-            "summary": "Seat | Standard, 7/21/2026 7:30:00 PM +02:00 - 7/22/2026 9:45:00 AM +02:00, 001 - 005, Mara Truog",
-            "createdOn": "2026-04-04T08:41:34.308954Z",
-            "confirmableUntil": "2026-04-04T09:01:34.304334Z",
-            "validFrom": "2026-07-21T17:30:00+00:00",
-            "validUntil": "2026-07-22T07:45:00+00:00",
-            "confirmedOn": "2026-04-04T08:43:12.016125Z",
+            "id": "7a2fd531-8af8-48bd-9e51-ca30376d92e2",
+            "summary": "Seat | Standard, 4/10/2026 9:30:00 PM +02:00 - 4/11/2026 9:45:00 AM +02:00, 001 - 006, Delaia Tschannen",
+            "createdOn": "2026-04-02T13:21:18.930573Z",
+            "confirmableUntil": "2026-04-02T13:41:18.919421Z",
+            "validFrom": "2026-04-10T19:30:00+00:00",
+            "validUntil": "2026-04-11T07:45:00+00:00",
             "price": {
               "vats": [],
               "currency": "CHF",
-              "amount": 15600,
+              "amount": 18000,
               "scale": 2
             },
             "originalPrice": {
               "currency": "CHF",
-              "amount": 15600,
+              "amount": 18000,
+              "scale": 2
+            },
+            "refundAmount": {
+              "vats": [],
+              "currency": "CHF",
+              "amount": 18000,
               "scale": 2
             },
             "tripCoverage": {
-              "coveredTripId": "3382d55b-75fe-4a4c-9b2c-5833ebc9d257",
+              "coveredTripId": "245d656c-90bf-437f-bbeb-39368c51def3",
               "coveredLegIds": [
-                "284a8afe-20fb-44b4-ba28-841d8c15c6fe"
+                "721127cd-e407-408c-9859-5b0cb73bea87"
               ]
             },
             "products": [
               {
-                "productId": "25892b31-5ef9-40ad-8814-5284532aa27b",
+                "productId": "e933ccc4-100d-43cc-a66b-163f66ff2fb4",
                 "legIds": [
-                  "284a8afe-20fb-44b4-ba28-841d8c15c6fe"
+                  "721127cd-e407-408c-9859-5b0cb73bea87"
                 ]
               }
             ],
-            "status": "FULFILLED",
+            "status": "REFUNDED",
             "hasBeenInSoldStatus": true,
             "offerMode": "INDIVIDUAL",
             "passengerIds": [
-              "e68d4b7c-02f1-422e-a31f-b422008f4151"
+              "15c548fa-72a4-4c2c-aed9-b42000dc16b9"
             ],
             "refundable": "NO",
             "exchangeable": "NO",
             "appliedCorporateCodes": [],
             "appliedPassengerTypes": [
               {
-                "passengerRef": "e68d4b7c-02f1-422e-a31f-b422008f4151",
+                "passengerRef": "15c548fa-72a4-4c2c-aed9-b42000dc16b9",
                 "type": "ADULT",
                 "description": "Passenger",
                 "tripCoverage": {
-                  "coveredTripId": "3382d55b-75fe-4a4c-9b2c-5833ebc9d257"
-                },
-                "appliedReductionCardTypes": []
-              }
-            ],
-            "appliedPromotionCodes": [],
-            "appliedReductions": []
-          },
-          {
-            "isReservationRequired": true,
-            "feeRefs": [],
-            "reservationRefs": [
-              {
-                "id": "28d5141d-3cd9-4a20-9a60-9f80b6c949b5"
-              }
-            ],
-            "ancillaryRefs": [],
-            "regulatoryConditions": [
-              "CIV"
-            ],
-            "objectType": "Admission",
-            "id": "9f9d91b8-1f58-4ded-a28a-bb37c88c1904",
-            "summary": "Seat | Standard, 7/21/2026 7:30:00 PM +02:00 - 7/22/2026 9:45:00 AM +02:00, 001 - 005, Sileno Truog",
-            "createdOn": "2026-04-04T08:41:34.308954Z",
-            "confirmableUntil": "2026-04-04T09:01:34.304334Z",
-            "validFrom": "2026-07-21T17:30:00+00:00",
-            "validUntil": "2026-07-22T07:45:00+00:00",
-            "confirmedOn": "2026-04-04T08:43:12.019659Z",
-            "price": {
-              "vats": [],
-              "currency": "CHF",
-              "amount": 15600,
-              "scale": 2
-            },
-            "originalPrice": {
-              "currency": "CHF",
-              "amount": 15600,
-              "scale": 2
-            },
-            "tripCoverage": {
-              "coveredTripId": "3382d55b-75fe-4a4c-9b2c-5833ebc9d257",
-              "coveredLegIds": [
-                "284a8afe-20fb-44b4-ba28-841d8c15c6fe"
-              ]
-            },
-            "products": [
-              {
-                "productId": "cc811068-32de-4db6-b483-c7ba0dd01751",
-                "legIds": [
-                  "284a8afe-20fb-44b4-ba28-841d8c15c6fe"
-                ]
-              }
-            ],
-            "status": "FULFILLED",
-            "hasBeenInSoldStatus": true,
-            "offerMode": "INDIVIDUAL",
-            "passengerIds": [
-              "2ef95850-254e-45fd-98c5-b422008f414e"
-            ],
-            "refundable": "NO",
-            "exchangeable": "NO",
-            "appliedCorporateCodes": [],
-            "appliedPassengerTypes": [
-              {
-                "passengerRef": "2ef95850-254e-45fd-98c5-b422008f414e",
-                "type": "ADULT",
-                "description": "Passenger",
-                "tripCoverage": {
-                  "coveredTripId": "3382d55b-75fe-4a4c-9b2c-5833ebc9d257"
+                  "coveredTripId": "245d656c-90bf-437f-bbeb-39368c51def3"
                 },
                 "appliedReductionCardTypes": []
               }
@@ -207,21 +130,21 @@
               "accommodationSubType": "ANY_SEAT",
               "reservedPlaces": [
                 {
-                  "id": "3927B",
+                  "id": "38796",
                   "passengerIds": [
-                    "e68d4b7c-02f1-422e-a31f-b422008f4151"
+                    "15c548fa-72a4-4c2c-aed9-b42000dc16b9"
                   ],
                   "vehicleNumber": "Twiliner-Bus-1",
                   "coachNumber": "Twiliner-Bus-1",
                   "placeNumbers": [
-                    "2"
+                    "10"
                   ],
                   "placeProperties": []
                 }
               ],
               "tripLegCoverage": {
-                "tripId": "3382d55b-75fe-4a4c-9b2c-5833ebc9d257",
-                "legId": "284a8afe-20fb-44b4-ba28-841d8c15c6fe"
+                "tripId": "245d656c-90bf-437f-bbeb-39368c51def3",
+                "legId": "721127cd-e407-408c-9859-5b0cb73bea87"
               }
             },
             "feeRefs": [],
@@ -231,12 +154,11 @@
               }
             ],
             "objectType": "Reservation",
-            "id": "ba5b3f5f-6424-443c-8c22-ebe391081c23",
-            "createdOn": "2026-04-04T08:41:34.308954Z",
-            "confirmableUntil": "2026-04-04T09:01:34.304334Z",
-            "validFrom": "2026-07-21T17:30:00+00:00",
-            "validUntil": "2026-07-22T07:45:00+00:00",
-            "confirmedOn": "2026-04-04T08:43:12.025134Z",
+            "id": "4686912d-0d51-4d8a-a8c2-e6fd06598baa",
+            "createdOn": "2026-04-02T13:21:18.930573Z",
+            "confirmableUntil": "2026-04-02T13:41:18.919421Z",
+            "validFrom": "2026-04-10T19:30:00+00:00",
+            "validUntil": "2026-04-11T07:45:00+00:00",
             "price": {
               "vats": [],
               "currency": "CHF",
@@ -248,97 +170,31 @@
               "amount": 0,
               "scale": 2
             },
-            "tripCoverage": {
-              "coveredTripId": "3382d55b-75fe-4a4c-9b2c-5833ebc9d257",
-              "coveredLegIds": [
-                "284a8afe-20fb-44b4-ba28-841d8c15c6fe"
-              ]
-            },
-            "products": [
-              {
-                "productId": "be174744-6d0b-448d-990a-0d359f8519b9",
-                "legIds": [
-                  "284a8afe-20fb-44b4-ba28-841d8c15c6fe"
-                ]
-              }
-            ],
-            "status": "FULFILLED",
-            "hasBeenInSoldStatus": true,
-            "offerMode": "INDIVIDUAL",
-            "passengerIds": [
-              "e68d4b7c-02f1-422e-a31f-b422008f4151"
-            ],
-            "refundable": "NO",
-            "exchangeable": "NO",
-            "appliedPromotionCodes": [],
-            "appliedReductions": []
-          },
-          {
-            "placeAllocation": {
-              "accommodationType": "SEAT",
-              "accommodationSubType": "ANY_SEAT",
-              "reservedPlaces": [
-                {
-                  "id": "3927C",
-                  "passengerIds": [
-                    "2ef95850-254e-45fd-98c5-b422008f414e"
-                  ],
-                  "vehicleNumber": "Twiliner-Bus-1",
-                  "coachNumber": "Twiliner-Bus-1",
-                  "placeNumbers": [
-                    "3"
-                  ],
-                  "placeProperties": []
-                }
-              ],
-              "tripLegCoverage": {
-                "tripId": "3382d55b-75fe-4a4c-9b2c-5833ebc9d257",
-                "legId": "284a8afe-20fb-44b4-ba28-841d8c15c6fe"
-              }
-            },
-            "feeRefs": [],
-            "availablePlacePreferences": [
-              {
-                "graphicalReservation": "WITHOUT_FEE"
-              }
-            ],
-            "objectType": "Reservation",
-            "id": "28d5141d-3cd9-4a20-9a60-9f80b6c949b5",
-            "createdOn": "2026-04-04T08:41:34.308954Z",
-            "confirmableUntil": "2026-04-04T09:01:34.304334Z",
-            "validFrom": "2026-07-21T17:30:00+00:00",
-            "validUntil": "2026-07-22T07:45:00+00:00",
-            "confirmedOn": "2026-04-04T08:43:12.022403Z",
-            "price": {
+            "refundAmount": {
               "vats": [],
               "currency": "CHF",
               "amount": 0,
               "scale": 2
             },
-            "originalPrice": {
-              "currency": "CHF",
-              "amount": 0,
-              "scale": 2
-            },
             "tripCoverage": {
-              "coveredTripId": "3382d55b-75fe-4a4c-9b2c-5833ebc9d257",
+              "coveredTripId": "245d656c-90bf-437f-bbeb-39368c51def3",
               "coveredLegIds": [
-                "284a8afe-20fb-44b4-ba28-841d8c15c6fe"
+                "721127cd-e407-408c-9859-5b0cb73bea87"
               ]
             },
             "products": [
               {
-                "productId": "c82dcc86-13c7-4c20-a2c7-6681f369f263",
+                "productId": "6c18e5a0-9015-4dc2-9a85-fe2f7e34fae1",
                 "legIds": [
-                  "284a8afe-20fb-44b4-ba28-841d8c15c6fe"
+                  "721127cd-e407-408c-9859-5b0cb73bea87"
                 ]
               }
             ],
-            "status": "FULFILLED",
+            "status": "REFUNDED",
             "hasBeenInSoldStatus": true,
             "offerMode": "INDIVIDUAL",
             "passengerIds": [
-              "2ef95850-254e-45fd-98c5-b422008f414e"
+              "15c548fa-72a4-4c2c-aed9-b42000dc16b9"
             ],
             "refundable": "NO",
             "exchangeable": "NO",
@@ -349,16 +205,15 @@
         "ancillaries": [],
         "fees": [],
         "tripCoverage": {
-          "coveredTripId": "3382d55b-75fe-4a4c-9b2c-5833ebc9d257",
+          "coveredTripId": "245d656c-90bf-437f-bbeb-39368c51def3",
           "coveredLegIds": [
-            "284a8afe-20fb-44b4-ba28-841d8c15c6fe",
-            "284a8afe-20fb-44b4-ba28-841d8c15c6fe"
+            "721127cd-e407-408c-9859-5b0cb73bea87"
           ]
         },
         "appliedThroughTicketTags": [],
         "products": [
           {
-            "id": "25892b31-5ef9-40ad-8814-5284532aa27b",
+            "id": "e933ccc4-100d-43cc-a66b-163f66ff2fb4",
             "summary": "Seat | Standard",
             "type": "ADMISSION_POINT2POINT",
             "code": "S001",
@@ -367,8 +222,8 @@
             "conditions": [
               {
                 "type": "SALE",
-                "description": "Seat Standard - Low (Mon-Thu)",
-                "shortDescription": "Seat Standard - Low"
+                "description": "Seat Standard - Weekends (Fri-Sun)",
+                "shortDescription": "Seat Standard - Weekends"
               }
             ],
             "flexibility": "NON_FLEXIBLE",
@@ -396,45 +251,7 @@
             "productTags": []
           },
           {
-            "id": "cc811068-32de-4db6-b483-c7ba0dd01751",
-            "summary": "Seat | Standard",
-            "type": "ADMISSION_POINT2POINT",
-            "code": "S001",
-            "description": "Seat | Standard",
-            "owner": "CH-020.3.049.775-0",
-            "conditions": [
-              {
-                "type": "SALE",
-                "description": "Seat Standard - Low (Mon-Thu)",
-                "shortDescription": "Seat Standard - Low"
-              }
-            ],
-            "flexibility": "NON_FLEXIBLE",
-            "serviceClass": {
-              "type": "STANDARD",
-              "name": "Standard"
-            },
-            "travelClass": "SECOND",
-            "isTrainBound": true,
-            "isReturnProduct": false,
-            "fulfillmentOptions": [
-              {
-                "type": "ETICKET",
-                "media": "PDF_A4"
-              }
-            ],
-            "descriptiveTexts": [
-              {
-                "description": "Standard tickets cannot be refunded. Incl. 1 x Hand luggage (max. 7kg), 1 x Checked luggage(max. 23kg).",
-                "shortDescription": "Ticket change info",
-                "textElementType": "INFORMATION"
-              }
-            ],
-            "freeItemCount": 0,
-            "productTags": []
-          },
-          {
-            "id": "be174744-6d0b-448d-990a-0d359f8519b9",
+            "id": "6c18e5a0-9015-4dc2-9a85-fe2f7e34fae1",
             "summary": "Seat Reservation",
             "type": "RESERVATION",
             "code": "R001",
@@ -443,40 +260,8 @@
             "conditions": [
               {
                 "type": "SALE",
-                "description": "Seat Standard - Low (Mon-Thu)",
-                "shortDescription": "Seat Standard - Low"
-              }
-            ],
-            "flexibility": "NON_FLEXIBLE",
-            "serviceClass": {
-              "type": "STANDARD",
-              "name": "Standard"
-            },
-            "travelClass": "SECOND",
-            "isTrainBound": true,
-            "isReturnProduct": false,
-            "fulfillmentOptions": [
-              {
-                "type": "ETICKET",
-                "media": "PDF_A4"
-              }
-            ],
-            "descriptiveTexts": [],
-            "freeItemCount": 0,
-            "productTags": []
-          },
-          {
-            "id": "c82dcc86-13c7-4c20-a2c7-6681f369f263",
-            "summary": "Seat Reservation",
-            "type": "RESERVATION",
-            "code": "R001",
-            "description": "Seat Reservation",
-            "owner": "CH-020.3.049.775-0",
-            "conditions": [
-              {
-                "type": "SALE",
-                "description": "Seat Standard - Low (Mon-Thu)",
-                "shortDescription": "Seat Standard - Low"
+                "description": "Seat Standard - Weekends (Fri-Sun)",
+                "shortDescription": "Seat Standard - Weekends"
               }
             ],
             "flexibility": "NON_FLEXIBLE",
@@ -502,25 +287,25 @@
     ],
     "trips": [
       {
-        "id": "3382d55b-75fe-4a4c-9b2c-5833ebc9d257",
-        "externalRef": "27d14e86-51d7-41f0-bf6f-133db2392b23",
-        "duration": "PT14H15M",
+        "id": "245d656c-90bf-437f-bbeb-39368c51def3",
+        "externalRef": "7f76fb20-313a-4561-9d79-5517d760f53b",
+        "duration": "PT12H15M",
         "direction": "OUT_BOUND",
         "origin": {
           "stopPlaceRef": "001",
           "objectType": "StopPlaceRef"
         },
         "destination": {
-          "stopPlaceRef": "005",
+          "stopPlaceRef": "006",
           "objectType": "StopPlaceRef"
         },
-        "startTime": "2026-07-21T19:30:00+02:00",
-        "endTime": "2026-07-22T09:45:00+02:00",
+        "startTime": "2026-04-10T21:30:00+02:00",
+        "endTime": "2026-04-11T09:45:00+02:00",
         "transfers": 0,
         "legs": [
           {
-            "id": "284a8afe-20fb-44b4-ba28-841d8c15c6fe",
-            "externalRef": "1e15cbf1-553a-41a1-9150-faa6ca5a84a9",
+            "id": "721127cd-e407-408c-9859-5b0cb73bea87",
+            "externalRef": "531d4ac1-93cf-450a-aac3-169ce584f369",
             "timedLeg": {
               "start": {
                 "stopPlaceRef": {
@@ -529,51 +314,81 @@
                 },
                 "stopPlaceName": "Zurich",
                 "serviceDeparture": {
-                  "timetabledTime": "2026-07-21T19:30:00+02:00",
-                  "observedTime": "2026-07-21T19:30:00+02:00"
+                  "timetabledTime": "2026-04-10T21:30:00+02:00",
+                  "observedTime": "2026-04-10T21:30:00+02:00"
                 }
               },
               "intermediates": [
                 {
                   "stopPlaceRef": {
-                    "stopPlaceRef": "002",
+                    "stopPlaceRef": "012",
                     "objectType": "StopPlaceRef"
                   },
-                  "stopPlaceName": "Bern",
+                  "stopPlaceName": "Basel",
                   "serviceArrival": {
-                    "timetabledTime": "2026-07-21T21:00:00+02:00",
-                    "observedTime": "2026-07-21T21:00:00+02:00"
+                    "timetabledTime": "2026-04-10T22:45:00+02:00",
+                    "observedTime": "2026-04-10T22:45:00+02:00"
                   },
                   "serviceDeparture": {
-                    "timetabledTime": "2026-07-21T21:15:00+02:00",
-                    "observedTime": "2026-07-21T21:15:00+02:00"
+                    "timetabledTime": "2026-04-10T23:00:00+02:00",
+                    "observedTime": "2026-04-10T23:00:00+02:00"
                   }
                 },
                 {
                   "stopPlaceRef": {
-                    "stopPlaceRef": "004",
+                    "stopPlaceRef": "010",
                     "objectType": "StopPlaceRef"
                   },
-                  "stopPlaceName": "Girona",
+                  "stopPlaceName": "Luxembourg",
                   "serviceArrival": {
-                    "timetabledTime": "2026-07-22T07:30:00+02:00",
-                    "observedTime": "2026-07-22T07:30:00+02:00"
+                    "timetabledTime": "2026-04-11T03:00:00+02:00",
+                    "observedTime": "2026-04-11T03:00:00+02:00"
                   },
                   "serviceDeparture": {
-                    "timetabledTime": "2026-07-22T07:45:00+02:00",
-                    "observedTime": "2026-07-22T07:45:00+02:00"
+                    "timetabledTime": "2026-04-11T03:15:00+02:00",
+                    "observedTime": "2026-04-11T03:15:00+02:00"
+                  }
+                },
+                {
+                  "stopPlaceRef": {
+                    "stopPlaceRef": "009",
+                    "objectType": "StopPlaceRef"
+                  },
+                  "stopPlaceName": "Brussels",
+                  "serviceArrival": {
+                    "timetabledTime": "2026-04-11T06:15:00+02:00",
+                    "observedTime": "2026-04-11T06:15:00+02:00"
+                  },
+                  "serviceDeparture": {
+                    "timetabledTime": "2026-04-11T06:30:00+02:00",
+                    "observedTime": "2026-04-11T06:30:00+02:00"
+                  }
+                },
+                {
+                  "stopPlaceRef": {
+                    "stopPlaceRef": "008",
+                    "objectType": "StopPlaceRef"
+                  },
+                  "stopPlaceName": "Rotterdam",
+                  "serviceArrival": {
+                    "timetabledTime": "2026-04-11T08:15:00+02:00",
+                    "observedTime": "2026-04-11T08:15:00+02:00"
+                  },
+                  "serviceDeparture": {
+                    "timetabledTime": "2026-04-11T08:30:00+02:00",
+                    "observedTime": "2026-04-11T08:30:00+02:00"
                   }
                 }
               ],
               "end": {
                 "stopPlaceRef": {
-                  "stopPlaceRef": "005",
+                  "stopPlaceRef": "006",
                   "objectType": "StopPlaceRef"
                 },
-                "stopPlaceName": "Barcelona",
+                "stopPlaceName": "Amsterdam",
                 "serviceArrival": {
-                  "timetabledTime": "2026-07-22T09:45:00+02:00",
-                  "observedTime": "2026-07-22T09:45:00+02:00"
+                  "timetabledTime": "2026-04-11T09:45:00+02:00",
+                  "observedTime": "2026-04-11T09:45:00+02:00"
                 }
               },
               "service": {
@@ -587,12 +402,12 @@
                   "shortName": "UT",
                   "productCategoryRef": "UT"
                 },
-                "publishedServiceName": "Zurich - Barcelona",
+                "publishedServiceName": "Zurich - Amsterdam",
                 "vehicleNumbers": [
-                  "003ZB"
+                  "001ZA"
                 ],
                 "lineNumbers": [
-                  "ZRH-BCN"
+                  "ZRH-AMS"
                 ],
                 "carriers": [
                   {
@@ -602,10 +417,10 @@
                 ],
                 "attributes": []
               },
-              "duration": "PT14H15M",
+              "duration": "PT12H15M",
               "isUnreservedService": false
             },
-            "isActive": true
+            "isActive": false
           }
         ],
         "tripStatus": {
@@ -617,22 +432,22 @@
         }
       }
     ],
-    "confirmationTimeLimit": "2026-04-04T09:01:34.304334Z",
+    "confirmationTimeLimit": "2026-04-02T13:41:18.919421Z",
     "fulfillmentType": "ETICKET",
     "fulfillments": [
       {
-        "id": "b0c8982b-7af3-451e-9341-f42544005e4a",
-        "bookingRef": "d541f657-faae-4664-baad-acb362e144fa",
-        "summary": "Fulfillment for booking part 260404912958",
-        "createdOn": "2026-04-04T08:41:34.308954Z",
-        "status": "FULFILLED",
-        "controlNumber": "260404912958",
+        "id": "7a2fd531-8af8-48bd-9e51-ca30376d92e2",
+        "bookingRef": "5fec458a-1a70-4f0d-8727-24fc403af250",
+        "summary": "Fulfillment for booking part 260402736627",
+        "createdOn": "2026-04-02T13:21:18.930573Z",
+        "status": "REFUNDED",
+        "controlNumber": "260402736627",
         "bookingParts": [
           {
-            "id": "b0c8982b-7af3-451e-9341-f42544005e4a"
+            "id": "7a2fd531-8af8-48bd-9e51-ca30376d92e2"
           },
           {
-            "id": "ba5b3f5f-6424-443c-8c22-ebe391081c23"
+            "id": "4686912d-0d51-4d8a-a8c2-e6fd06598baa"
           }
         ],
         "issuer": "CH-020.3.049.775-0",
@@ -640,13 +455,13 @@
           {
             "medium": "PDF_A4",
             "type": "TICKET",
-            "downloadLink": "https://api.twiliner.turnit.com/retailer/ticket/b0c8982b-7af3-451e-9341-f42544005e4a",
+            "downloadLink": "https://api.twiliner.turnit.com/retailer/ticket/7a2fd531-8af8-48bd-9e51-ca30376d92e2",
             "format": "application/pdf"
           },
           {
             "medium": "PKPASS",
             "type": "TICKET",
-            "downloadLink": "https://api.twiliner.turnit.com/retailer/pkpass/b0c8982b-7af3-451e-9341-f42544005e4a",
+            "downloadLink": "https://api.twiliner.turnit.com/retailer/pkpass/7a2fd531-8af8-48bd-9e51-ca30376d92e2",
             "format": "application/vnd.apple.pkpass"
           }
         ],
@@ -659,7 +474,7 @@
                   "format": "PNG",
                   "symbology": "AZTEC"
                 },
-                "data": "iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAABHNCSVQICAgIfAhkiAAAAvpJREFUeJzt3cGK2zAUQNG4zP//srsLKbS3g8zIsjhnPRA7mcvbPKTjPM/zBfzVr7sfAFb2NfsDj+OY/ZHfNmuYjnwHI8+22+fcwQSBIBAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCO9lxd2WCFd+nxE7LwR+1x3fgQkCQSAQBAJBIBAEAkEgEAQCQSAQBAJBIBAEAkEgEKafrDhit0W93ZYvd3ufTyYIBIFAEAgEgUAQCASBQBAIBIFAEAgEgUAQCASBQDjOyVt9T1lSYz13XFFtgkAQCASBQBAIBIFAEAgEgUAQCASBQBAIBIFAEAiE97LiyqcXrvxs7P37mCAQBAJBIBAEAkEgEAQCQSAQBAJBIBAEAkEgEAQC4X0N9B2n1q3GqY9r/z4jnKwIP0ggEAQCQSAQBAJBIBAEAkEgEAQCQSAQBAJBIBC+/v8n/7bbYtuIlb+DlZcvV362TyYIBIFAEAgEgUAQCASBQBAIBIFAEAgEgUAQCASBQLi0rDjiKUtqP2m3EylnmXX65ycTBIJAIAgEgkAgCASCQCAIBIJAIAgEgkAgCASCQCBcWla0eDjG4uGYO/7fTBAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCAKBMP0a6N0WHHd7n1mesrBpgkAQCASBQBAIBIFAEAgEgUAQCASBQBAIBIFAEAiE97LirKW7lRccn7JAt4OnXIVtgkAQCASBQBAIBIFAEAgEgUAQCASBQBAIBIFAEAiE97Libot6Tjzk9bq+FGmCQBAIBIFAEAgEgUAQCASBQBAIBIFAEAgEgUAQCIRL10DPOh1v1iLlrPdZ+VRBz/YnEwSCQCAIBIJAIAgEgkAgCASCQCAIBIJAIAgEgkAgXFpWHOFK5/2uwt75FEsTBIJAIAgEgkAgCASCQCAIBIJAIAgEgkAgCASCQCBMX1bc7RS+lZcIR+y8eDjCBIEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCAKBIBAIx7nyEYRwMxMEgkAg/AbJXZKaueKv2AAAAABJRU5ErkJggg=="
+                "data": "iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAABHNCSVQICAgIfAhkiAAAAwBJREFUeJzt3bFu4zAUAEHr4P//ZV0Vw8VlL6AQiiZmqhQBTNtZvBQP1HGe5/kA/unP3QeAlT3vPsBvOY7j7iN8a2Roz3o/K59txNV/kEwQCAKBIBAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgXB8rbtbhlv7bMz7ft5fxwSBIBAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCNOXFWfZ7crhq0t3q1l5AfWdCQJBIBAEAkEgEAQCQSAQBAJBIBAEAkEgEAQCQSAQXsuK015ws6VI5nGzIixGIBAEAkEgEAQCQSAQBAJBIBAEAkEgEAQCQSAQLt2sOGvPceWzsff3Y4JAEAgEgUAQCASBQBAIBIFAEAgEgUAQCASBQBAIhOfXD3fcWrcatz6u/f2McLMi/CKBQBAIBIFAEAgEgUAQCASBQBAIBIFAEAgEgUB4/v9XvrfbYtuIlT+DlZcvZy26Xv1+TBAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCAKBcGlZccTKC3Sz7HYj5Syz/nbcrAg/JBAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCJeWFS0ejrF4OOaOz80EgSAQCAKBIBAIAoEgEAgCgSAQCAKBIBAIAoEgEAjTHwO924Ljbu9nllmLh1dvsTRBIAgEgkAgCASCQCAIBIJAIAgEgkAgCASCQCAIBMJrWfGOR+z+1MpnY8ynPArbBIEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCAKBIBAIr2XF3Rb13HjI43H979oEgSAQCAKBIBAIAoEgEAgCgSAQCAKBIBAIAoEgEAiXHgM963a8T3lk8GqvM2Lls93BBIEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCAKBIBAIxzl502y3ZTgLjmNWvvny/XMzQSAIBIJAIAgEgkAgCASCQCAIBIJAIAgEgkAgCATCR9ysOGLlZbgRuy0ervx+3pkgEAQCQSAQBAJBIBAEAkEgEAQCQSAQBAJBIBAEAmH6zYrwSUwQCAKB8Bdy8qpzn7Az+wAAAABJRU5ErkJggg=="
               },
               {
                 "type": {
@@ -667,64 +482,10 @@
                   "format": "TEXT",
                   "symbology": "AZTEC"
                 },
-                "data": "MjYwNDA0OTEyOTU4"
+                "data": "MjYwNDAyNzM2NjI3"
               }
             ],
-            "status": "FULFILLED"
-          }
-        ]
-      },
-      {
-        "id": "9f9d91b8-1f58-4ded-a28a-bb37c88c1904",
-        "bookingRef": "d541f657-faae-4664-baad-acb362e144fa",
-        "summary": "Fulfillment for booking part 260404691791",
-        "createdOn": "2026-04-04T08:41:34.308954Z",
-        "status": "FULFILLED",
-        "controlNumber": "260404691791",
-        "bookingParts": [
-          {
-            "id": "9f9d91b8-1f58-4ded-a28a-bb37c88c1904"
-          },
-          {
-            "id": "28d5141d-3cd9-4a20-9a60-9f80b6c949b5"
-          }
-        ],
-        "issuer": "CH-020.3.049.775-0",
-        "fulfillmentDocuments": [
-          {
-            "medium": "PDF_A4",
-            "type": "TICKET",
-            "downloadLink": "https://api.twiliner.turnit.com/retailer/ticket/9f9d91b8-1f58-4ded-a28a-bb37c88c1904",
-            "format": "application/pdf"
-          },
-          {
-            "medium": "PKPASS",
-            "type": "TICKET",
-            "downloadLink": "https://api.twiliner.turnit.com/retailer/pkpass/9f9d91b8-1f58-4ded-a28a-bb37c88c1904",
-            "format": "application/vnd.apple.pkpass"
-          }
-        ],
-        "fulfillmentParts": [
-          {
-            "securityFeatures": [
-              {
-                "type": {
-                  "type": "BAR_CODE",
-                  "format": "PNG",
-                  "symbology": "AZTEC"
-                },
-                "data": "iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAABHNCSVQICAgIfAhkiAAAAvxJREFUeJzt3UFu2zAARUGp8P2vrO6MLNoXQ0opip1ZB4hs54FZfND7cRzHBvzRr7sfAGb2uvsB/pV93+9+hEc68w/Fmfd65t/zlRMEgkAgCASCQCAIBIJAIAgEgkAgCASCQCAIBIJAILzHiqPGfaPW9aPGcGfM/GyjjHo9VweOThAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCAKBMPxmxZkHgatdU7zaMPSOz8cJAkEgEAQCQSAQBAJBIBAEAkEgEAQCQSAQBAJBIBD2Y/ACbLUbAlmPmxXhQwKBIBAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgXDpa6BH3V74lFv4/lcrfz5OEAgCgSAQCAKBIBAIAoEgEAgCgSAQCAKBIBAIAoHwHisaEbr1cdt8PtvmZkX4mEAgCASCQCAIBIJAIAgEgkAgCASCQCAIBIJAILy+/5G/m3nYNsrM78HM48unDF2dIBAEAkEgEAQCQSAQBAJBIBAEAkEgEAQCQSAQBALh0ljxjJkHdKM8Zag3GzcrwmQEAkEgEAQCQSAQBAJBIBAEAkEgEAQCQSAQBALh0ljR8PAcw8Nxrr7XThAIAoEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCAKBMPxroFcbOK72ekZ5ymDTCQJBIBAEAkEgEAQCQSAQBAJBIBAEAkEgEAQCQSAQ3mPFO75i91MzPxvnPOUzdYJAEAgEgUAQCASBQBAIBIFAEAgEgUAQCASBQBAIhPdYcbWhnhsP1zNq6Pr19zhBIAgEgkAgCASCQCAIBIJAIAgEgkAgCASCQCAIBMJ+XFgpXh2CzWbU65n5fZv52e7gBIEgEAgCgSAQCAKBIBAIAoEgEAgCgSAQCAKBIBAIr+9/5GfNPAic2cwjwtU+UzcrwocEAkEgEAQCQSAQBAJBIBAEAkEgEAQCQSAQBAJh+Fhx1IDOUG+cmV/P1b8DJwgEgUAQCASBQBAIBIFAEAgEgUAQCASBQBAIBIFAuPQ10LA6JwgEgUD4DUuxpIIEl0qDAAAAAElFTkSuQmCC"
-              },
-              {
-                "type": {
-                  "type": "BAR_CODE",
-                  "format": "TEXT",
-                  "symbology": "AZTEC"
-                },
-                "data": "MjYwNDA0NjkxNzkx"
-              }
-            ],
-            "status": "FULFILLED"
+            "status": "REFUNDED"
           }
         ]
       }
@@ -732,8 +493,12 @@
     "paymentMethods": [
       {
         "type": "ELECTRONIC_PAYMENT",
-        "transactionId": "ZJTVJ5TBVKKWKFH6",
-        "additionalInfo": "ContactIdUsedForPayment: 1\nResponse: {\n  \"Live\": \"true\",\n  \"NotificationItems\": [\n    {\n      \"NotificationRequestItem\": {\n        \"Amount\": {\n          \"currency\": \"CHF\",\n          \"value\": 31200\n        },\n        \"EventCode\": \"AUTHORISATION\",\n        \"EventDate\": \"2026-04-04T10:43:09+02:00\",\n        \"MerchantAccountCode\": \"Twiliner642ECOM\",\n        \"MerchantReference\": \"DVACFA-b7fe7a69f29bbc2662f\",\n        \"OriginalReference\": null,\n        \"PspReference\": \"ZJTVJ5TBVKKWKFH6\",\n        \"Reason\": \"023212:1562:07/2026\",\n        \"Success\": true,\n        \"PaymentMethod\": \"mc\",\n        \"Operations\": [\n          \"CANCEL\",\n          \"CAPTURE\",\n          \"REFUND\"\n        ],\n        \"AdditionalData\": {\n          \"expiryDate\": \"07/2026\",\n          \"authCode\": \"023212\",\n          \"cardSummary\": \"1562\",\n          \"isCardCommercial\": \"false\",\n          \"threeds2.cardEnrolled\": \"true\",\n          \"checkoutSessionId\": \"CSDAB50AB3E37FF11737A42EA\",\n          \"networkTxReference\": \"MNWZZJ8FQ0404\",\n          \"checkout.cardAddedBrand\": \"mcsuperpremiumcredit\",\n          \"cardFunction\": \"Consumer\",\n          \"hmacSignature\": \"Ooa1tW3skV3OcgsTua/1gRGgliSh3MDKpx8W7/w5/cU=\"\n        }\n      }\n    }\n  ]\n}"
+        "transactionId": "SNJK4CM5NW8GHFG3"
+      },
+      {
+        "type": "ELECTRONIC_PAYMENT",
+        "transactionId": "D8NKW9ZB9PX2HBG3",
+        "additionalInfo": "ContactIdUsedForPayment: 1\nResponse: {\n  \"Live\": \"true\",\n  \"NotificationItems\": [\n    {\n      \"NotificationRequestItem\": {\n        \"Amount\": {\n          \"currency\": \"CHF\",\n          \"value\": 18000\n        },\n        \"EventCode\": \"AUTHORISATION\",\n        \"EventDate\": \"2026-04-02T15:22:12+02:00\",\n        \"MerchantAccountCode\": \"Twiliner642ECOM\",\n        \"MerchantReference\": \"CAG48R-b7e7c578830b52621ed\",\n        \"OriginalReference\": null,\n        \"PspReference\": \"D8NKW9ZB9PX2HBG3\",\n        \"Reason\": \"9YDNMO:5802:11/2030\",\n        \"Success\": true,\n        \"PaymentMethod\": \"mc\",\n        \"Operations\": [\n          \"CANCEL\",\n          \"CAPTURE\",\n          \"REFUND\"\n        ],\n        \"AdditionalData\": {\n          \"expiryDate\": \"11/2030\",\n          \"authCode\": \"9YDNMO\",\n          \"cardSummary\": \"5802\",\n          \"isCardCommercial\": \"true\",\n          \"threeds2.cardEnrolled\": \"true\",\n          \"checkoutSessionId\": \"CS3E4395D61FE81279B6392AC\",\n          \"networkTxReference\": \"BPDCJ6DNF0402\",\n          \"checkout.cardAddedBrand\": \"mccommercialdebit\",\n          \"cardFunction\": \"Commercial\",\n          \"hmacSignature\": \"Jt9Eu306ly1xn5Vjpo1ZPnrUDTuxTBoLLFjvVYWDP/A=\"\n        }\n      }\n    }\n  ]\n}"
       }
     ],
     "pendingVouchers": []

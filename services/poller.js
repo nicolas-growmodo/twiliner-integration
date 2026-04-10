@@ -13,11 +13,12 @@ const State = require('./state');
  *    c. Sync to Brevo.
  * 4. Update last sync time.
  */
-async function runSync() {
+async function runSync(options = {}) {
+    const { statusFilters = [], stateFilename = 'sync_state.json' } = options;
     console.log('[Worker] Starting Sync Cycle...');
 
     // 1. Get State
-    const lastSync = State.getLastSyncTime();
+    const lastSync = State.getLastSyncTime(stateFilename);
     const currentSyncStart = new Date().toISOString();
     console.log(`[Worker] Searching for bookings modified since: ${lastSync}`);
 
@@ -55,6 +56,13 @@ async function runSync() {
                 }
 
                 console.log(`[Worker] Transformed Booking ${bookingId} - Found ${data.contacts.length} unique contacts to sync.`);
+
+                // Apply status filter if provided
+                const currentStatus = (data.booking.status || 'unknown').toUpperCase();
+                if (statusFilters.length > 0 && !statusFilters.includes(currentStatus)) {
+                    console.log(`[Worker] Skipping booking ${bookingId} because status '${currentStatus}' is not in filter: ${statusFilters.join(', ')}`);
+                    continue;
+                }
 
                 // 5. Sync each contact (purchaser and passengers) to Brevo
                 for (const contact of data.contacts) {
@@ -124,7 +132,7 @@ async function runSync() {
         // 6. Update State (only if we successfully searched)
         // Ensure strictly increasing time handling (maybe use max modification time from results)
         // For simplicity, using the start time of this filtered search to avoid gaps.
-        State.updateLastSyncTime(currentSyncStart);
+        State.updateLastSyncTime(currentSyncStart, stateFilename);
         console.log('[Worker] Sync Cycle Complete.');
 
     } catch (error) {
@@ -134,16 +142,25 @@ async function runSync() {
 
 /**
  * Starts the worker on a schedule.
- * @param {number} intervalMinutes 
+ * @param {Object|number} options Configuration options or legacy interval minutes
  */
-function start(intervalMinutes = 5) {
-    console.log(`[Worker] Initialized with ${intervalMinutes} minute interval.`);
+function start(options = {}) {
+    let config = {};
+    if (typeof options === 'number') {
+        config.intervalMinutes = options;
+    } else {
+        config = options;
+    }
+
+    const { intervalMinutes = 5, statusFilters = [], stateFilename = 'sync_state.json' } = config;
+
+    console.log(`[Worker] Initialized with ${intervalMinutes} minute interval. (Filters: ${statusFilters.length > 0 ? statusFilters.join(', ') : 'None'}, State: ${stateFilename})`);
 
     // Run immediately on start
-    runSync();
+    runSync(config);
 
     // Schedule
-    setInterval(runSync, intervalMinutes * 60 * 1000);
+    setInterval(() => runSync(config), intervalMinutes * 60 * 1000);
 }
 
 module.exports = {

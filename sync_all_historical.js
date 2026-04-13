@@ -86,6 +86,7 @@ async function runHistoricalSync() {
                                 ...(data.booking.bookingCode ? { BOOKING_CODE: data.booking.bookingCode } : {}),
                                 ...(data.booking.ticketNumber ? { TICKET_NUMBER: data.booking.ticketNumber } : {}),
                                 ...(data.booking.totalPrice !== undefined ? { BOOKING_PRICE: data.booking.totalPrice } : {}),
+                                ...(data.booking.currency ? { CURRENCY: data.booking.currency } : {}),
                                 ...(data.booking.departureDate ? { DEPARTURE_DATE: data.booking.departureDate } : {}),
                                 ...(data.booking.departureTime ? { DEPARTURE_TIME: data.booking.departureTime } : {}),
                                 ...(data.booking.arrivalDate ? { ARRIVAL_DATE: data.booking.arrivalDate } : {}),
